@@ -10,6 +10,11 @@ import org.springframework.security.authentication.event.AuthenticationSuccessEv
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientManager;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProviderBuilder;
@@ -20,6 +25,7 @@ import org.springframework.security.oauth2.client.web.DefaultOAuth2AuthorizedCli
 import org.springframework.security.oauth2.client.web.OAuth2AuthorizedClientRepository;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
@@ -50,7 +56,8 @@ public class SecurityConfig {
             config.setAllowCredentials(true);
             return config;
         }));
-
+        http.authorizeHttpRequests(request -> request
+                .anyRequest().authenticated());
         http.oauth2Login(login -> login
                 .defaultSuccessUrl("/user", true)
                 .userInfoEndpoint(endpoint -> endpoint
@@ -100,18 +107,6 @@ public class SecurityConfig {
                 .build();
     }
 
-    //    @Bean
-//    public OAuth2AuthorizedClientService authorizedClientService(
-//            ClientRegistrationRepository clientRegistrationRepository) {
-//        return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
-//    }
-//
-//    @Bean
-//    public OAuth2AuthorizedClientRepository authorizedClientRepository(
-//            OAuth2AuthorizedClientService authorizedClientService) {
-//        return new AuthenticatedPrincipalOAuth2AuthorizedClientRepository(authorizedClientService);
-//    }
-//
     @Bean
     public OAuth2AuthorizedClientManager authorizedClientManager(
             ClientRegistrationRepository clientRegistrationRepository,
@@ -132,16 +127,37 @@ public class SecurityConfig {
         return authorizedClientManager;
     }
 
+    //todo may be needed implementation of refresh token
+
     @Bean
-    ApplicationListener<AuthenticationSuccessEvent> doSomething() {
+    public ApplicationListener<AuthenticationSuccessEvent> doSomething() {
         return new ApplicationListener<AuthenticationSuccessEvent>() {
             @Override
             public void onApplicationEvent(AuthenticationSuccessEvent event){
                 Authentication authentication = event.getAuthentication();
-                log.info("AUTH SUCCESS");
-                ;
+                SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
+                //todo perform db saving
+                log.info("AUTH SUCCESS " + user.getEmail());
+
                 // get required details from OAuth2Authentication instance and proceed further
             }
         };
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public InMemoryUserDetailsManager userDetailsManager() {
+        //Create single main admin
+        UserDetails mainAdmin = User.withUsername("admin")
+                //todo make to good impl
+                .password("admin")
+                .authorities("ADMIN")
+                .build();
+
+        return new InMemoryUserDetailsManager(mainAdmin);
     }
 }
