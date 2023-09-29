@@ -27,10 +27,16 @@ public class SpotifyCallbackController {
     private final OAuth2AuthorizedClientManager clientManager;
 
     @GetMapping("/user")
-    public String getAuthRedirectData(@RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient) {
+    public String getAuthRedirectData(
+            @RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient,
+            Authentication authentication
+    ) {
+
+        SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
+        log.info(user.getUserUri());
         log.info("CODE " + authorizedClient.getAccessToken().getTokenValue());
-        log.info("CODE " + authorizedClient.getRefreshToken().getTokenValue());
-        log.info("CODE " + authorizedClient.getClientRegistration());
+//        log.info("CODE " + authorizedClient.getRefreshToken().getTokenValue());
+//        log.info("CODE " + );
         return "success";
     }
 }
