@@ -23,5 +23,6 @@ public class Room {
     private String image;
     private List<Guest> guests;
     private int songsListened;
+    private SpotifyUser owner;
 
 }

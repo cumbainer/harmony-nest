@@ -8,6 +8,7 @@ export interface Room {
     image: string;
     guests: [];
     songsListened: number;
+    ownerName: string
 }
 
 export interface RoomType {

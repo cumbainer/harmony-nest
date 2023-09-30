@@ -15,4 +15,6 @@ public class RoomDto {
     private String image;
     private List<GuestDto> guests;
     private int songsListened;
+    private SpotifyUserDto owner;
+
 }
