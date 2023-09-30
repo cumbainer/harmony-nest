@@ -23,16 +23,18 @@ public class CustomOAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSucc
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, ServletException, IOException {
-        log.info("NAMEEEEE " + authentication.getName());
-        if (authentication.getName().equals("admin")) {
-                log.info("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-//            // Add the "ADMIN" authority to the user
-//            List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
-//            updatedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
-//            Authentication updatedAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
-//            SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
-//        }
+
+        SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
+        //todo handle
+        if (user.getDisplayedName().contains("g")) {
+
+            List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
+            updatedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
+            Authentication updatedAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
+            SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
+
         }
-//        super.onAuthenticationSuccess(request, response, authentication);
+        response.sendRedirect("/test");
+        super.onAuthenticationSuccess(request, response, authentication);
     }
 }

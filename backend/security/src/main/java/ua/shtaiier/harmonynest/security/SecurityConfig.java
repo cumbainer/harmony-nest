@@ -3,17 +3,11 @@ package ua.shtaiier.harmonynest.security;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,8 +27,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +34,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomAuthAdminProvider customAuthAdminProvider;
     private final CustomOAuth2Service customOAuth2Service;
     private final CustomOAuth2LoginSuccessHandler customOAuth2LoginSuccessHandler;
 
@@ -68,16 +59,18 @@ public class SecurityConfig {
         }));
         http.formLogin(login -> login
                 .defaultSuccessUrl("/test", true)
+                .permitAll()
         );
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/test")
-                .hasAnyAuthority("ADMIN")
-                .anyRequest().authenticated());
+                .hasAnyAuthority("OAUTH2_USER")
+                .anyRequest().authenticated()
+        );
         http.oauth2Login(login -> login
-                .defaultSuccessUrl("/user", true)
+                        .defaultSuccessUrl("/user", true)
 //                .successHandler(customOAuth2LoginSuccessHandler)
-                .userInfoEndpoint(endpoint -> endpoint
-                        .userService(customOAuth2Service))
+                        .userInfoEndpoint(endpoint -> endpoint
+                                .userService(customOAuth2Service))
         );
 
         return http.build();
@@ -150,10 +143,11 @@ public class SecurityConfig {
 //    public ApplicationListener<AuthenticationSuccessEvent> doSomething() {
 //        return new ApplicationListener<AuthenticationSuccessEvent>() {
 //            @Override
-//            public void onApplicationEvent(AuthenticationSuccessEvent event){
+//            public void onApplicationEvent(AuthenticationSuccessEvent event) {
 //                Authentication authentication = event.getAuthentication();
 //                //add if statement whether user is loggined via spotify or custom form
 //                SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
+//                authentication.setAuthenticated(false);
 //                //todo perform db saving
 //                log.info("AUTH SUCCESS " + user.getEmail());
 //

@@ -14,8 +14,7 @@ public class CustomOAuth2Service extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         String clientName = userRequest.getClientRegistration().getClientName();
-        OAuth2User user =  super.loadUser(userRequest);
-        log.info("USER DATA");
+        OAuth2User user = super.loadUser(userRequest);
         return new SpotifyOAuth2User(user, clientName);
     }
 }
