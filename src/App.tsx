@@ -1,13 +1,26 @@
-import SideMenu from "./components/side-menu/SideMenu.tsx";
-import Header from "./components/Header.tsx";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import RootLayout from "./pages/RootLayout.tsx";
+import RoomsPage from "./pages/RoomsPage.tsx";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <RootLayout/>,
+        children: [
+            {
+                path: "rooms",
+                element: <RoomsPage />
+            },
+            {}
+        ]
+    }
+]);
 
 const App = () => {
 
     return (
-        <div className={"bg-[#13182B]"}>
-            <SideMenu />
-            <Header />
-        </div>
+        <RouterProvider router={router}/>
+
     )
 }
 

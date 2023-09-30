@@ -58,6 +58,7 @@ public class SecurityConfig {
             return config;
         }));
         http.formLogin(login -> login
+                .loginPage("http://localhost:5173/login")
                 .defaultSuccessUrl("/test", true)
                 .permitAll()
         );

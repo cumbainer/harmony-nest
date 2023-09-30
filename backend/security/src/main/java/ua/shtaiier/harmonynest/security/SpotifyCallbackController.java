@@ -29,10 +29,11 @@ public class SpotifyCallbackController {
     }
 
     @GetMapping("/token")
-    public void getToken(
+    public String getToken(
             HttpServletResponse response,
             @RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient
     ) {
-        response.setHeader("X-Dataverse-key", authorizedClient.getAccessToken().getTokenValue());
+//        response.setHeader("X-Dataverse-key", authorizedClient.getAccessToken().getTokenValue());
+        return authorizedClient.getAccessToken().getTokenValue();
     }
 }
