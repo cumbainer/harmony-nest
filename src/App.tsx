@@ -1,6 +1,7 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RootLayout from "./pages/RootLayout.tsx";
 import RoomsPage from "./pages/RoomsPage.tsx";
+import {loader} from "./util/rooms-loader.ts";
 
 const router = createBrowserRouter([
     {
@@ -9,7 +10,8 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "rooms",
-                element: <RoomsPage />
+                element: <RoomsPage/>,
+                loader: loader
             },
             {}
         ]

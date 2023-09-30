@@ -27,6 +27,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -48,13 +49,14 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(c -> c.disable());
         http.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
             CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedMethods(Collections.singletonList(""));
-            config.setAllowedOrigins(Collections.singletonList("localhost:4040"));
-            config.setMaxAge(4200L);
-            config.setAllowedHeaders(Collections.singletonList(""));
-            config.setAllowCredentials(true);
+            config.setAllowedMethods(List.of("*"));
+            config.setAllowedOrigins(List.of("*"));
+//            config.setMaxAge(4200L);
+//            config.setAllowedHeaders(Collections.singletonList(""));
+//            config.setAllowCredentials(true);
             return config;
         }));
         http.formLogin(login -> login
@@ -63,9 +65,9 @@ public class SecurityConfig {
                 .permitAll()
         );
         http.authorizeHttpRequests(request -> request
-                .requestMatchers("/test")
-                .hasAnyAuthority("OAUTH2_USER")
-                .anyRequest().authenticated()
+                .requestMatchers("/api/rooms").permitAll()
+                .requestMatchers("/test").hasAnyAuthority("OAUTH2_USER")
+                .anyRequest().permitAll()
         );
         http.oauth2Login(login -> login
                         .defaultSuccessUrl("/user", true)

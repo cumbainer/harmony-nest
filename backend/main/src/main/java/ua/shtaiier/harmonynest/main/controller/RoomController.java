@@ -10,7 +10,7 @@ import ua.shtaiier.harmonynest.main.service.RoomService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/rooms")
+@RequestMapping("/api/rooms")
 @RequiredArgsConstructor
 public class RoomController {
 
