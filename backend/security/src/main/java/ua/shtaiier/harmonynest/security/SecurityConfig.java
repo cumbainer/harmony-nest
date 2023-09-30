@@ -7,10 +7,13 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +33,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Configuration
 @EnableWebSecurity
@@ -37,7 +42,9 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private final CustomAuthAdminProvider customAuthAdminProvider;
     private final CustomOAuth2Service customOAuth2Service;
+    private final CustomOAuth2LoginSuccessHandler customOAuth2LoginSuccessHandler;
 
     @Value("${spotify.client-id}")
     private String spotifyClientId;
@@ -45,8 +52,11 @@ public class SecurityConfig {
     @Value("${spotify.client-secret}")
     private String spotifyClientSecret;
 
+    //todo on some admin endpoint user needs on top of spotify auth my custom form auth, so eventually it will be 2 roles, ADMIN and OAUTH2_USER
+    //todo customize session properties (15 min default duration)
+
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
             CorsConfiguration config = new CorsConfiguration();
             config.setAllowedMethods(Collections.singletonList(""));
@@ -56,13 +66,20 @@ public class SecurityConfig {
             config.setAllowCredentials(true);
             return config;
         }));
+        http.formLogin(login -> login
+                .defaultSuccessUrl("/test", true)
+        );
         http.authorizeHttpRequests(request -> request
+                .requestMatchers("/test")
+                .hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated());
         http.oauth2Login(login -> login
                 .defaultSuccessUrl("/user", true)
+//                .successHandler(customOAuth2LoginSuccessHandler)
                 .userInfoEndpoint(endpoint -> endpoint
                         .userService(customOAuth2Service))
         );
+
         return http.build();
     }
 
@@ -129,20 +146,21 @@ public class SecurityConfig {
 
     //todo may be needed implementation of refresh token
 
-    @Bean
-    public ApplicationListener<AuthenticationSuccessEvent> doSomething() {
-        return new ApplicationListener<AuthenticationSuccessEvent>() {
-            @Override
-            public void onApplicationEvent(AuthenticationSuccessEvent event){
-                Authentication authentication = event.getAuthentication();
-                SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
-                //todo perform db saving
-                log.info("AUTH SUCCESS " + user.getEmail());
-
-                // get required details from OAuth2Authentication instance and proceed further
-            }
-        };
-    }
+//    @Bean
+//    public ApplicationListener<AuthenticationSuccessEvent> doSomething() {
+//        return new ApplicationListener<AuthenticationSuccessEvent>() {
+//            @Override
+//            public void onApplicationEvent(AuthenticationSuccessEvent event){
+//                Authentication authentication = event.getAuthentication();
+//                //add if statement whether user is loggined via spotify or custom form
+//                SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
+//                //todo perform db saving
+//                log.info("AUTH SUCCESS " + user.getEmail());
+//
+//                // get required details from OAuth2Authentication instance and proceed further
+//            }
+//        };
+//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -154,10 +172,11 @@ public class SecurityConfig {
         //Create single main admin
         UserDetails mainAdmin = User.withUsername("admin")
                 //todo make to good impl
-                .password("admin")
-                .authorities("ADMIN")
+                .password(passwordEncoder().encode("admin"))
+                .authorities(new SimpleGrantedAuthority("ADMIN"))
                 .build();
 
         return new InMemoryUserDetailsManager(mainAdmin);
     }
+
 }
