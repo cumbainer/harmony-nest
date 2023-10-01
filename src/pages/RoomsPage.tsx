@@ -1,6 +1,6 @@
 import {Await, useLoaderData} from "react-router";
 import {Suspense} from "react";
-import RoomsList from "../components/RoomsList.tsx";
+import RoomsList from "../components/rooms/RoomsList.tsx";
 import {RoomType} from "../util/rooms-loader.ts";
 
 const RoomsPage = () => {

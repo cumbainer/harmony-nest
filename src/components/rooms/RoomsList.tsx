@@ -1,5 +1,5 @@
-import RoomItem from "./RoomItem.tsx";
-import {RoomType} from "../util/rooms-loader.ts";
+import RoomItem from "./room-item/RoomItem.tsx";
+import {RoomType} from "../../util/rooms-loader.ts";
 
 
 const RoomsList = (props: RoomType) => {
