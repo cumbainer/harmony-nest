@@ -8,11 +8,14 @@ const RoomsPage = () => {
     const {rooms} = data;
 
     return (
-        <Suspense fallback={<p>Loading...</p>}>
-            <Await resolve={rooms} >
-                {(loadedRooms) => <RoomsList rooms={loadedRooms}/>}
-            </Await>
-        </Suspense>
+        <>
+            <Suspense fallback={<p>Loading...</p>}>
+                <Await resolve={rooms}>
+                    {(loadedRooms) => <RoomsList rooms={loadedRooms}/>}
+                </Await>
+            </Suspense>
+        </>
+
     );
 };
 export default RoomsPage;

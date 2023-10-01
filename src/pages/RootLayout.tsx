@@ -4,11 +4,11 @@ import {Outlet} from "react-router";
 
 const RootLayout = () => {
     return (
-        <div className={"bg-[#13182B] h-fit"}>
+        <div className={"h-fit"}>
             {/*<Header />*/}
-            <div className="flex">
+            <div className="flex justify-center">
                 {/*<SideMenu />*/}
-                <Outlet />
+                <Outlet  />
             </div>
         </div>
     );
