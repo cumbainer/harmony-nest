@@ -43,7 +43,29 @@ public class OnAppStart {
                 new SpotifyUser("spotifyuser2", null, null, "https://upload.wikimedia.org/wikipedia/commons/a/ab/Bundesarchiv_Bild_183-H1216-0500-002%2C_Adolf_Hitler.jpg",
                         "Winston")
         );
+        Room room3 = new Room(
+                "aroom3",
+                "Winston Curchill's Great Speech",
+                false,
+                LocalDate.now(),
+                "https://cdn.britannica.com/35/7535-004-99D14F9B/Winston-Churchill-Yousuf-Karsh-1941.jpg",
+                List.of(new Guest("guest", "Popov Bogdan", null, null)),
+                10,
+                new SpotifyUser("spotifyuser2", null, null, "https://upload.wikimedia.org/wikipedia/commons/a/ab/Bundesarchiv_Bild_183-H1216-0500-002%2C_Adolf_Hitler.jpg",
+                        "Winston")
+        );
+        Room room4 = new Room(
+                "aroom4",
+                "Winston Curchill's Great Speech",
+                false,
+                LocalDate.now(),
+                "https://cdn.britannica.com/35/7535-004-99D14F9B/Winston-Churchill-Yousuf-Karsh-1941.jpg",
+                List.of(new Guest("guest", "Popov Bogdan", null, null)),
+                10,
+                new SpotifyUser("spotifyuser2", null, null, "https://upload.wikimedia.org/wikipedia/commons/a/ab/Bundesarchiv_Bild_183-H1216-0500-002%2C_Adolf_Hitler.jpg",
+                        "Winston")
+        );
 
-        roomRepository.saveAll(List.of(room1, room2));
+        roomRepository.saveAll(List.of(room1, room2, room3, room4));
     }
 }

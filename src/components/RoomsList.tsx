@@ -6,7 +6,7 @@ const RoomsList = (props: RoomType) => {
 
     return (
         <div className="inline-flex m-20">
-            <ul className="">
+            <ul className="space-y-10">
                 {props.rooms.map(room => <RoomItem key={room.id} room={room}/>)}
             </ul>
         </div>

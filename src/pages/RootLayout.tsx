@@ -4,7 +4,7 @@ import {Outlet} from "react-router";
 
 const RootLayout = () => {
     return (
-        <div className={"bg-[#13182B] w-screen h-screen"}>
+        <div className={"bg-[#13182B] w-screen h-fit"}>
             {/*<Header />*/}
             <div className="flex">
                 {/*<SideMenu />*/}
