@@ -10,7 +10,7 @@ public class RoomDto {
 
     private String id;
     private String title;
-    private boolean isPlaying;
+    private boolean currentlyIsPlaying;
     private LocalDate creationDate;
     private String image;
     private List<GuestDto> guests;

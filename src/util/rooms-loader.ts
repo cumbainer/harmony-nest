@@ -3,7 +3,7 @@ import {defer, json} from "react-router";
 export interface Room {
     id: string;
     title: string;
-    isPlaying: boolean;
+    currentlyIsPlaying: boolean;
     creationDate: Date;
     image: string;
     guests: [];
@@ -27,3 +27,4 @@ export const loader = () => {
     });
 
 }
+

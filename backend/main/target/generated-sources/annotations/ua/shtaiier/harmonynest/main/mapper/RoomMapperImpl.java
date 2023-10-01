@@ -6,12 +6,14 @@ import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 import ua.shtaiier.harmonynest.main.domain.Guest;
 import ua.shtaiier.harmonynest.main.domain.Room;
+import ua.shtaiier.harmonynest.main.domain.SpotifyUser;
 import ua.shtaiier.harmonynest.main.dto.GuestDto;
 import ua.shtaiier.harmonynest.main.dto.RoomDto;
+import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-09-30T19:57:48+0300",
+    date = "2023-10-01T13:58:26+0300",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
 )
 @Component
@@ -27,11 +29,12 @@ public class RoomMapperImpl implements RoomMapper {
 
         room.setId( entity.getId() );
         room.setTitle( entity.getTitle() );
-        room.setPlaying( entity.isPlaying() );
+        room.setCurrentlyIsPlaying( entity.isCurrentlyIsPlaying() );
         room.setCreationDate( entity.getCreationDate() );
         room.setImage( entity.getImage() );
         room.setGuests( guestDtoListToGuestList( entity.getGuests() ) );
         room.setSongsListened( entity.getSongsListened() );
+        room.setOwner( spotifyUserDtoToSpotifyUser( entity.getOwner() ) );
 
         return room;
     }
@@ -46,11 +49,12 @@ public class RoomMapperImpl implements RoomMapper {
 
         roomDto.setId( entity.getId() );
         roomDto.setTitle( entity.getTitle() );
-        roomDto.setPlaying( entity.isPlaying() );
+        roomDto.setCurrentlyIsPlaying( entity.isCurrentlyIsPlaying() );
         roomDto.setCreationDate( entity.getCreationDate() );
         roomDto.setImage( entity.getImage() );
         roomDto.setGuests( guestListToGuestDtoList( entity.getGuests() ) );
         roomDto.setSongsListened( entity.getSongsListened() );
+        roomDto.setOwner( spotifyUserToSpotifyUserDto( entity.getOwner() ) );
 
         return roomDto;
     }
@@ -111,6 +115,22 @@ public class RoomMapperImpl implements RoomMapper {
         return list1;
     }
 
+    protected SpotifyUser spotifyUserDtoToSpotifyUser(SpotifyUserDto spotifyUserDto) {
+        if ( spotifyUserDto == null ) {
+            return null;
+        }
+
+        SpotifyUser spotifyUser = new SpotifyUser();
+
+        spotifyUser.setId( spotifyUserDto.getId() );
+        spotifyUser.setEmail( spotifyUserDto.getEmail() );
+        spotifyUser.setProduct( spotifyUserDto.getProduct() );
+        spotifyUser.setImage( spotifyUserDto.getImage() );
+        spotifyUser.setDisplayedName( spotifyUserDto.getDisplayedName() );
+
+        return spotifyUser;
+    }
+
     protected GuestDto guestToGuestDto(Guest guest) {
         if ( guest == null ) {
             return null;
@@ -137,5 +157,21 @@ public class RoomMapperImpl implements RoomMapper {
         }
 
         return list1;
+    }
+
+    protected SpotifyUserDto spotifyUserToSpotifyUserDto(SpotifyUser spotifyUser) {
+        if ( spotifyUser == null ) {
+            return null;
+        }
+
+        SpotifyUserDto spotifyUserDto = new SpotifyUserDto();
+
+        spotifyUserDto.setId( spotifyUser.getId() );
+        spotifyUserDto.setEmail( spotifyUser.getEmail() );
+        spotifyUserDto.setProduct( spotifyUser.getProduct() );
+        spotifyUserDto.setImage( spotifyUser.getImage() );
+        spotifyUserDto.setDisplayedName( spotifyUser.getDisplayedName() );
+
+        return spotifyUserDto;
     }
 }

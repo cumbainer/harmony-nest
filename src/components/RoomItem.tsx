@@ -3,7 +3,7 @@ import {Room} from "../util/rooms-loader.ts";
 
 const RoomItem = (props: { room: Room }) => {
     const room = props.room;
-    console.log(room)
+
     const roomImageStyle = {
         backgroundImage: `url(${room.image})`,
         backgroundSize: 'cover',
@@ -12,9 +12,12 @@ const RoomItem = (props: { room: Room }) => {
         height: '200px',
         borderRadius: '10px',
     };
+    const isPlayingBg = "from-blue-950 via-blue-900 to-[#1B1F38]";
+    const isNotPlayingBg = "from-[#1B1F39] to-[#1B1F50]";
+    const itemBackground = room.currentlyIsPlaying ? isPlayingBg : isNotPlayingBg;
 
     return (
-        <li className="bg-[#1B1F38] p-3 bg-gradient-to-t from-blue-950 via-blue-900 to-[#1B1F38] relative min-w-[80rem]">
+        <li className={`bg-[#1B1F38] relative min-w-[80rem] p-3 bg-gradient-to-t ${itemBackground}`}>
             <h1 className="text-sky-500 bg-none font-semibold mb-3 text-2xl">Adolf Hitler's <span className="text-white">room</span></h1>
             <div className="flex">
                 <div style={roomImageStyle}></div>
@@ -29,7 +32,7 @@ const RoomItem = (props: { room: Room }) => {
                             <span className="text-gray-500 inline-block align-middle">·</span>
                             <div className="flex-shrink-0">2004</div>
                             <span className="text-gray-500 inline-block align-middle">·</span>
-                            <div className="flex-shrink-0 text-sky-500">Playing</div>
+                            <div className="flex-shrink-0 text-sky-500">{room.currentlyIsPlaying}</div>
                         </div>
                     </div>
                     <div className="text-sky-500 text-xl font-bold mt-6">
