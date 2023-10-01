@@ -9,7 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="security" />
       </profile>
-      <profile name="Annotation profile for main" enabled="true">
+      <profile name="Annotation profile for harmony-nest" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
