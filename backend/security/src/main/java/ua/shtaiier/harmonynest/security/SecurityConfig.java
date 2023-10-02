@@ -60,14 +60,14 @@ public class SecurityConfig {
             return config;
         }));
         http.formLogin(login -> login
-                .loginPage("http://localhost:5173/login")
+                .loginPage("http://localhost:5173/auth")
                 .defaultSuccessUrl("/test", true)
                 .permitAll()
         );
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/api/rooms").permitAll()
                 .requestMatchers("/test").hasAnyAuthority("OAUTH2_USER")
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
         );
         http.oauth2Login(login -> login
                         .defaultSuccessUrl("/user", true)

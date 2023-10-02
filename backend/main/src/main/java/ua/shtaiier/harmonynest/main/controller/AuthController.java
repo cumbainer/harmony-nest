@@ -38,7 +38,7 @@ public class AuthController {
     }
 
     @GetMapping("/user")
-    public void getAuthRedirectData(
+    public String getAuthRedirectData(
             @RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient,
             Authentication authentication, HttpServletResponse response
     ) throws IOException {
@@ -48,14 +48,14 @@ public class AuthController {
         SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
         SpotifyUserDto createdUser = userService.create(user, accessToken, refreshToken);
 
-        response.sendRedirect("http://localhost:5173/token?id=" + createdUser.getId());
+        response.sendRedirect("http://localhost:5173/auth/token?id=" + createdUser.getId());
+        return "";
+//        return userService.getTokensByUserId(createdUser.getId()).getAccessToken();
     }
 
     @GetMapping("/token")
     public Token getToken(
             @RequestParam("userId") String userId,
-            HttpServletResponse response
-//            @RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient,
     ) {
 
 

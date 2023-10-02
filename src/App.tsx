@@ -5,6 +5,7 @@ import {loader} from "./util/rooms-loader.ts";
 import LoginPage, {action as loginAction} from "./pages/LoginPage.tsx";
 import Token from "./pages/Token.tsx";
 import {tokenLoader} from "./util/login-util.ts";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 const router = createBrowserRouter([
     {
@@ -12,29 +13,40 @@ const router = createBrowserRouter([
         element: <RootLayout/>,
         children: [
             {
-                path: "rooms",
+                path: "/rooms",
                 element: <RoomsPage/>,
-                loader: loader
+                loader: loader,
             },
             {
-                path: "login",
-                element: <LoginPage/>,
-                action: loginAction
-            },
-            {
-                path: "/token",
-                element: <Token />,
-                loader: tokenLoader
-                // action: loginAction
-            },
+                //todo dispay some text that user is succesfully logined
+                path: "auth",
+                // element: <LoginPage/>,
+                // action: loginAction,
+                children: [
+                    {
+                        index: true,
+                        element: <LoginPage/>,
+                        action: loginAction
+                    },
+                    {
+                        //todo make this page only available for redirect
+                        path: "token",
+                        element: <Token/>,
+                        loader: tokenLoader
 
+                    }
+                ]
+            },
         ]
     }
 ]);
+const client = new QueryClient();
 
 const App = () => {
     return (
-        <RouterProvider router={router}/>
+        <QueryClientProvider client={client}>
+            <RouterProvider router={router}/>
+        </QueryClientProvider>
     )
 }
 

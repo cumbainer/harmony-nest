@@ -14,6 +14,7 @@ export const action = async () => {
     //     method: "POST"
     // });
     // console.log(response)
+    // return "";
 
     return redirect("http://localhost:4040/oauth2/authorization/spotify");
 };
