@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ua.shtaiier.harmonynest.main.domain.Guest;
 import ua.shtaiier.harmonynest.main.domain.Room;
 import ua.shtaiier.harmonynest.main.domain.SpotifyUser;
+import ua.shtaiier.harmonynest.main.dto.Token;
 import ua.shtaiier.harmonynest.main.repository.RoomRepository;
 
 import java.time.LocalDate;
@@ -30,7 +31,7 @@ public class OnAppStart {
                 List.of(new Guest("guest", "Popov Bogdan", null, null)),
                 10,
                 new SpotifyUser("spotifyuser1", null, null, "https://upload.wikimedia.org/wikipedia/commons/a/ab/Bundesarchiv_Bild_183-H1216-0500-002%2C_Adolf_Hitler.jpg",
-                        "Adolf Hitler")
+                        "Adolf Hitler", new Token())
         );
         Room room2 = new Room(
                 "aroom2",
@@ -41,7 +42,7 @@ public class OnAppStart {
                 List.of(new Guest("guest", "Popov Bogdan", null, null)),
                 10,
                 new SpotifyUser("spotifyuser2", null, null, "https://upload.wikimedia.org/wikipedia/commons/a/ab/Bundesarchiv_Bild_183-H1216-0500-002%2C_Adolf_Hitler.jpg",
-                        "Winston")
+                        "Winston", new Token())
         );
         Room room3 = new Room(
                 "aroom3",
@@ -52,7 +53,7 @@ public class OnAppStart {
                 List.of(new Guest("guest", "Popov Bogdan", null, null)),
                 10,
                 new SpotifyUser("spotifyuser2", null, null, "https://upload.wikimedia.org/wikipedia/commons/a/ab/Bundesarchiv_Bild_183-H1216-0500-002%2C_Adolf_Hitler.jpg",
-                        "Winston")
+                        "Winston", new Token())
         );
         Room room4 = new Room(
                 "aroom4",
@@ -63,7 +64,7 @@ public class OnAppStart {
                 List.of(new Guest("guest", "Popov Bogdan", null, null)),
                 10,
                 new SpotifyUser("spotifyuser2", null, null, "https://upload.wikimedia.org/wikipedia/commons/a/ab/Bundesarchiv_Bild_183-H1216-0500-002%2C_Adolf_Hitler.jpg",
-                        "Winston")
+                        "Winston", new Token())
         );
 
         roomRepository.saveAll(List.of(room1, room2, room3, room4));

@@ -13,7 +13,7 @@ import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-01T19:56:16+0300",
+    date = "2023-10-02T12:38:57+0300",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
 )
 @Component
@@ -120,15 +120,16 @@ public class RoomMapperImpl implements RoomMapper {
             return null;
         }
 
-        SpotifyUser spotifyUser = new SpotifyUser();
+        SpotifyUser.SpotifyUserBuilder spotifyUser = SpotifyUser.builder();
 
-        spotifyUser.setId( spotifyUserDto.getId() );
-        spotifyUser.setEmail( spotifyUserDto.getEmail() );
-        spotifyUser.setProduct( spotifyUserDto.getProduct() );
-        spotifyUser.setImage( spotifyUserDto.getImage() );
-        spotifyUser.setDisplayedName( spotifyUserDto.getDisplayedName() );
+        spotifyUser.id( spotifyUserDto.getId() );
+        spotifyUser.email( spotifyUserDto.getEmail() );
+        spotifyUser.product( spotifyUserDto.getProduct() );
+        spotifyUser.image( spotifyUserDto.getImage() );
+        spotifyUser.displayedName( spotifyUserDto.getDisplayedName() );
+        spotifyUser.token( spotifyUserDto.getToken() );
 
-        return spotifyUser;
+        return spotifyUser.build();
     }
 
     protected GuestDto guestToGuestDto(Guest guest) {
@@ -164,14 +165,15 @@ public class RoomMapperImpl implements RoomMapper {
             return null;
         }
 
-        SpotifyUserDto spotifyUserDto = new SpotifyUserDto();
+        SpotifyUserDto.SpotifyUserDtoBuilder spotifyUserDto = SpotifyUserDto.builder();
 
-        spotifyUserDto.setId( spotifyUser.getId() );
-        spotifyUserDto.setEmail( spotifyUser.getEmail() );
-        spotifyUserDto.setProduct( spotifyUser.getProduct() );
-        spotifyUserDto.setImage( spotifyUser.getImage() );
-        spotifyUserDto.setDisplayedName( spotifyUser.getDisplayedName() );
+        spotifyUserDto.id( spotifyUser.getId() );
+        spotifyUserDto.email( spotifyUser.getEmail() );
+        spotifyUserDto.product( spotifyUser.getProduct() );
+        spotifyUserDto.image( spotifyUser.getImage() );
+        spotifyUserDto.displayedName( spotifyUser.getDisplayedName() );
+        spotifyUserDto.token( spotifyUser.getToken() );
 
-        return spotifyUserDto;
+        return spotifyUserDto.build();
     }
 }

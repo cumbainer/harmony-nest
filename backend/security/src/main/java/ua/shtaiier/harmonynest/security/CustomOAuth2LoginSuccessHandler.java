@@ -26,7 +26,7 @@ public class CustomOAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSucc
 
         SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
         //todo handle
-        if (user.getDisplayedName().contains("g")) {
+        if (user.getName().contains("g")) {
 
             List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
             updatedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));

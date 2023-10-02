@@ -9,9 +9,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.OAuth2RefreshToken;
+import org.springframework.web.bind.annotation.*;
+import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
+import ua.shtaiier.harmonynest.main.dto.Token;
+import ua.shtaiier.harmonynest.main.repository.SpotifyUserRepository;
+import ua.shtaiier.harmonynest.main.service.SpotifyUserService;
 import ua.shtaiier.harmonynest.security.SpotifyOAuth2User;
 
 import java.io.IOException;
@@ -23,8 +27,10 @@ public class AuthController {
 
 //    @Autowired
 //    private AccessTokenRepository accessTokenRepository;
+    private final SpotifyUserService userService;
 
-    private String acessToken = "";
+
+//    private String acessToken = "";
     //todo change
 
     @PostMapping("/spotify/login")
@@ -36,29 +42,31 @@ public class AuthController {
     @GetMapping("/user")
     public String getAuthRedirectData(
             @RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient,
-            Authentication authentication, HttpServletRequest request, HttpServletResponse response
+            Authentication authentication, HttpServletResponse response
     ) throws IOException {
-        HttpHeaders headers = new HttpHeaders();
-        response.setHeader("Token", authorizedClient.getAccessToken().getTokenValue());
-        response.sendRedirect("http://localhost:5173/token");
-        SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
-//        accessTokenRepository.save(new AccessToken(authorizedClient.getAccessToken().getTokenValue()));
 
-        acessToken = authorizedClient.getAccessToken().getTokenValue();
-        log.info(user.getUserUri());
-        log.info("CODE " + authorizedClient.getAccessToken().getTokenValue());
+        String accessToken = authorizedClient.getAccessToken().getTokenValue();
+        String refreshToken = authorizedClient.getRefreshToken().getTokenValue();
+        SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
+        SpotifyUserDto createdUser = userService.create(user, accessToken, refreshToken);
+
+            response.sendRedirect("http://localhost:5173/token?id="+createdUser.getId());
         return "";
-//        return "redirect:/";
+//        return createdUser.getId();
+//        return "redirect:/localhost:5173/token?id="+createdUser.getId();
     }
 
     @GetMapping("/token")
     public String getToken(
+            @RequestParam("userId") String userId,
             HttpServletResponse response
 //            @RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient,
     ) {
+
+
 //        SpotifyOAuth2User user = (SpotifyOAuth2User)context.getAuthentication().getPrincipal();
 //        response.setHeader("X-Dataverse-key", authorizedClient.getAccessToken().getTokenValue());
 //        return accessTokenRepository.findAll().get(0).getAccessToken();
-        return acessToken;
+        return userService.getTokensByUserId(userId);
     }
 }

@@ -4,8 +4,7 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 public class SpotifyOAuth2User implements OAuth2User {
@@ -37,8 +36,17 @@ public class SpotifyOAuth2User implements OAuth2User {
         return oauth2User.getAttribute("email");
     }
 
-    public String getDisplayedName() {
-        return oauth2User.getAttribute("display_name");
+    public String getId() {
+        return oauth2User.getAttribute("id");
+    }
+
+    public String getProduct() {
+        return oauth2User.getAttribute("product");
+    }
+
+    public String getImage() {
+        List<LinkedHashMap<String, String>> images = oauth2User.getAttribute("images");
+        return images.get(1).get("url");
     }
 
     public String getUserUri() {

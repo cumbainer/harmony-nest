@@ -1,16 +1,19 @@
 package ua.shtaiier.harmonynest.main.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import ua.shtaiier.harmonynest.main.dto.Token;
 
-@Document
+@Document(collection = "hosts_info")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class SpotifyUser {
 
     @Id
@@ -20,5 +23,6 @@ public class SpotifyUser {
     private String product;
     private String image;
     private String displayedName;
+    private Token token;
 
 }
