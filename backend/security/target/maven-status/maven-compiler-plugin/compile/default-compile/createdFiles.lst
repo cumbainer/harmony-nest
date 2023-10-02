@@ -1,8 +1,5 @@
+ua\shtaiier\harmonynest\security\CustomOAuth2Service.class
 ua\shtaiier\harmonynest\security\config\SecurityModuleConfig.class
 ua\shtaiier\harmonynest\security\SecurityConfig.class
-ua\shtaiier\harmonynest\security\CustomOAuth2Service.class
-ua\shtaiier\harmonynest\security\SpotifyCallbackController.class
-ua\shtaiier\harmonynest\security\AccessTokenRepository.class
 ua\shtaiier\harmonynest\security\SpotifyOAuth2User.class
-ua\shtaiier\harmonynest\security\AccessToken.class
 ua\shtaiier\harmonynest\security\CustomOAuth2LoginSuccessHandler.class

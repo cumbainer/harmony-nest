@@ -1,14 +1,18 @@
-import {json} from "react-router";
 import {redirect} from "react-router-dom";
+import Cookies from "universal-cookie";
 
 export const tokenLoader = async () => {
+    const cookies = new Cookies();
     const baseTokenUrl = "http://localhost:4040/token";
 
-    const userId = new URL(baseTokenUrl).searchParams.get("id");
+    const userId = new URLSearchParams(window.location.search).get("id");
     const response = await fetch(baseTokenUrl + "?userId=" + userId);
+    const {accessToken, refreshToken} = await response.json();
 
-    const tokens = await response.text();
-    //todo deal with the secure tokens savings way
-    localStorage.setItem("access-key", tokens)
+    cookies.set("access_token", accessToken, {
+        path: "/",
+        httpOnly: true
+    })
+    localStorage.setItem('refresh_token', refreshToken);
     return redirect("/rooms");
 };
