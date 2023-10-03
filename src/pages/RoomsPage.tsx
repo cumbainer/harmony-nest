@@ -1,7 +1,7 @@
 import {Await, useRouteLoaderData} from "react-router";
 import {Suspense} from "react";
 import RoomsList from "../components/rooms/RoomsList.tsx";
-import {loader, RoomType} from "../util/rooms-loader.ts";
+import {loader, RoomType} from "../util/request-functions.ts";
 import {PuffLoader} from "react-spinners";
 import {useQuery} from "@tanstack/react-query";
 import loginPage from "./LoginPage.tsx";

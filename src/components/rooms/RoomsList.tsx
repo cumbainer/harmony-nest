@@ -1,5 +1,5 @@
 import RoomItem from "./room-item/RoomItem.tsx";
-import {RoomType} from "../../util/rooms-loader.ts";
+import {RoomType} from "../../util/request-functions.ts";
 import {useState} from "react";
 import CreateNewRoomPage from "../../pages/CreateNewRoomPage.tsx";
 
@@ -10,9 +10,12 @@ const RoomsList = (props: RoomType) => {
         setFormIsActive(true);
     };
 
+    const formIsOpenedClasses = "pointer-events-none blur-sm brightness-50"
+
     return (
         <>
-            <div className={`relative ${formIsActive ? "inset-0" : ""}`}>
+            <div className={`relative ${formIsActive ?  formIsOpenedClasses : ""}`}>
+
                 <div className="flex justify-between my-8">
                     <div className="flex items-center gap-2">
                         <div className="w-1 h-10 bg-white rounded-lg"></div>
@@ -27,7 +30,7 @@ const RoomsList = (props: RoomType) => {
                         Create your room
                     </button>
                 </div>
-                <ul className="space-y-6">
+                <ul className={`space-y-6`}>
                     {props.rooms.map((room) => (
                         <RoomItem key={room.id} room={room}/>
                     ))}
@@ -41,4 +44,5 @@ const RoomsList = (props: RoomType) => {
 };
 
 export default RoomsList;
+
 
