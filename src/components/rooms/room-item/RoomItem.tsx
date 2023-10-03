@@ -18,7 +18,7 @@ const RoomItem = (props: { room: Room }) => {
                    <RoomCurrentSongInfo room={room}/>
                     <div className="text-sky-500 text-xl font-bold mt-6">
                         <h1 className="my-5 mt-5 ">Songs listened to <span className="text-white"> : 10</span></h1>
-                        <h1>Peoples in room <span className="text-white"> : {room.guests.length}</span></h1>
+                        {/*<h1>Peoples in room <span className="text-white"> : {room.guests.length}</span></h1>*/}
                     </div>
                     <div className="absolute right-0 top-0 p-7 text-lg my-9">
                         <h1 className="text-white">Created <span className="text-sky-500">10 minutes ago</span></h1>

@@ -67,7 +67,7 @@ public class SecurityConfig {
 ////            config.setAllowedOriginPatterns(List.of("*"));
 //            return source;
 //        }));
-        http.cors(Customizer.withDefaults());
+//        http.cors(Customizer.withDefaults());
         http.formLogin(login -> login
                 .loginPage("http://localhost:5173/auth")
                 .permitAll()
