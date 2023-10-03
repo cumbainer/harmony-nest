@@ -1,3 +1,4 @@
+C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\util\Token.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\dto\SpotifyUserDto.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\mapper\BaseMapper.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\domain\AccessToken.java
@@ -8,9 +9,10 @@ C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\m
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\repository\RoomRepository.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\service\RoomService.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\domain\Guest.java
+C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\exception\HostNotFoundException.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\repository\AccessTokenRepository.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\OnAppStart.java
-C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\dto\Token.java
+C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\util\CreateRoomRequest.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\repository\SpotifyUserRepository.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\controller\AuthController.java
 C:\Users\Winston Churchill\Desktop\reactProjects\harmony-nest\backend\main\src\main\java\ua\shtaiier\harmonynest\main\HarmonyNestApplication.java

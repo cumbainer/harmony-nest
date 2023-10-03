@@ -28,9 +28,9 @@ export const createNewRoom =  async (room: NewRoom) => {
         title: room.title,
         hostId: localStorage.getItem("host_id")
     };
-    const response = await fetch("http://localhost:4040/api/rooms/new", {
+    const response = await fetch("http://localhost:4040/api/rooms/new?id="+room.title, {
         method: "POST",
-        body: JSON.stringify(requestRoom),
+        // body: JSON.stringify(requestRoom),
         headers: {
             'Content-Type': 'application/json',
             // "Access-Control-Allow-Origin": "*",

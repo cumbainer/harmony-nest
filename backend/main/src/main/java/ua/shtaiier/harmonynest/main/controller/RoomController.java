@@ -26,8 +26,13 @@ public class RoomController {
     }
 
 
+//    @PostMapping("/new")
+//    public RoomDto createNewRoom(@RequestBody CreateRoomRequest request) {
+//        return roomService.create(request);
+//    }
+
     @PostMapping("/new")
-    public RoomDto createNewRoom(@RequestBody CreateRoomRequest request) {
-        return roomService.create(request);
+    public String createNewRoom(@RequestParam("id") String id) {
+        return "";
     }
 }
