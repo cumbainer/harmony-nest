@@ -13,7 +13,9 @@ import java.util.List;
 @RequestMapping("/api/rooms")
 @RequiredArgsConstructor
 @Slf4j
+//@CrossOrigin(origins = "http://localhost:5173")
 public class RoomController {
+
     private final RoomService roomService;
 
     @GetMapping("")
@@ -23,12 +25,9 @@ public class RoomController {
         return roomService.getAll();
     }
 
+
     @PostMapping("/new")
-    public String createNewRoom(@RequestParam("hostId") String hostId, @RequestBody CreateRoomRequest request) {
-
-        log.info("new room");
-
-        return "a room";
+    public RoomDto createNewRoom(@RequestBody CreateRoomRequest request) {
+        return roomService.create(request);
     }
-
 }

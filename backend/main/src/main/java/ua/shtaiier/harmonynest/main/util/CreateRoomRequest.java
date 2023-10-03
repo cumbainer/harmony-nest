@@ -6,5 +6,6 @@ import lombok.Data;
 public class CreateRoomRequest {
 
     private String roomTitle;
+    private String hostId;
 
 }

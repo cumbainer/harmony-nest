@@ -13,7 +13,7 @@ import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-03T16:31:52+0300",
+    date = "2023-10-03T17:26:35+0300",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
 )
 @Component
@@ -45,18 +45,18 @@ public class RoomMapperImpl implements RoomMapper {
             return null;
         }
 
-        RoomDto roomDto = new RoomDto();
+        RoomDto.RoomDtoBuilder roomDto = RoomDto.builder();
 
-        roomDto.setId( entity.getId() );
-        roomDto.setTitle( entity.getTitle() );
-        roomDto.setCurrentlyIsPlaying( entity.isCurrentlyIsPlaying() );
-        roomDto.setCreationDate( entity.getCreationDate() );
-        roomDto.setImage( entity.getImage() );
-        roomDto.setGuests( guestListToGuestDtoList( entity.getGuests() ) );
-        roomDto.setSongsListened( entity.getSongsListened() );
-        roomDto.setOwner( spotifyUserToSpotifyUserDto( entity.getOwner() ) );
+        roomDto.id( entity.getId() );
+        roomDto.title( entity.getTitle() );
+        roomDto.currentlyIsPlaying( entity.isCurrentlyIsPlaying() );
+        roomDto.creationDate( entity.getCreationDate() );
+        roomDto.image( entity.getImage() );
+        roomDto.guests( guestListToGuestDtoList( entity.getGuests() ) );
+        roomDto.songsListened( entity.getSongsListened() );
+        roomDto.owner( spotifyUserToSpotifyUserDto( entity.getOwner() ) );
 
-        return roomDto;
+        return roomDto.build();
     }
 
     @Override

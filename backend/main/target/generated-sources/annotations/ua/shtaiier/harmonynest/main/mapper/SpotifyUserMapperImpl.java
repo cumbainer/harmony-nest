@@ -9,7 +9,7 @@ import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-10-03T16:31:52+0300",
+    date = "2023-10-03T17:26:35+0300",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
 )
 @Component

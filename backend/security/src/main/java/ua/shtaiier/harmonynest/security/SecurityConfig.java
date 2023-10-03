@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,6 +26,10 @@ import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Collections;
 import java.util.List;
@@ -50,22 +55,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(c -> c.disable());
-        http.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
-            CorsConfiguration config = new CorsConfiguration();
-            config.setAllowedMethods(List.of("*"));
-            config.setAllowedOrigins(List.of("*"));
-//            config.setMaxAge(4200L);
-//            config.setAllowedHeaders(Collections.singletonList(""));
-//            config.setAllowCredentials(true);
-            return config;
-        }));
+//        http.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
+//            CorsConfiguration config = new CorsConfiguration();
+//            config.setAllowedMethods(List.of("POST", "GET"));
+//            config.setAllowedOrigins(List.of("*"));
+////            config.setMaxAge(4200L);
+//            config.setAllowedHeaders(List.of(""));
+//            UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//            source.registerCorsConfiguration("/**", config);
+////            config.setAllowCredentials(false);
+////            config.setAllowedOriginPatterns(List.of("*"));
+//            return source;
+//        }));
+        http.cors(Customizer.withDefaults());
         http.formLogin(login -> login
                 .loginPage("http://localhost:5173/auth")
                 .permitAll()
         );
         http.authorizeHttpRequests(request -> request
-                .requestMatchers("/api/rooms").permitAll()
-                .requestMatchers("/token").permitAll()
+//                .requestMatchers("/api/rooms").permitAll()
+//                .requestMatchers("/token").permitAll()
                 .anyRequest().permitAll()
         );
         http.oauth2Login(login -> login
@@ -76,6 +85,30 @@ public class SecurityConfig {
         );
 
         return http.build();
+    }
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedMethods(List.of("*"));
+        config.setAllowedOrigins(List.of("*"));
+//            config.setMaxAge(4200L);
+        config.setAllowedHeaders(List.of(""));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+//            config.setAllowCredentials(false);
+//            config.setAllowedOriginPatterns(List.of("*"));
+        return source;
+
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
+            }
+        };
     }
 
     @Bean

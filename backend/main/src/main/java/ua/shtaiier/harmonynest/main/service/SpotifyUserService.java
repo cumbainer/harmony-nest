@@ -2,12 +2,14 @@ package ua.shtaiier.harmonynest.main.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.Host;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import ua.shtaiier.harmonynest.main.domain.SpotifyUser;
 import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
+import ua.shtaiier.harmonynest.main.exception.HostNotFoundException;
 import ua.shtaiier.harmonynest.main.util.Token;
 import ua.shtaiier.harmonynest.main.mapper.SpotifyUserMapper;
 import ua.shtaiier.harmonynest.main.repository.SpotifyUserRepository;
@@ -26,6 +28,13 @@ public class SpotifyUserService {
         user.setToken(new Token(accessToken, refreshToken));
 
         return spotifyUserMapper.toDto(spotifyUserRepository.save(user));
+    }
+
+    public SpotifyUserDto getById(String id) {
+        SpotifyUser spotifyUser = spotifyUserRepository.findById(id).orElseThrow(() ->
+                new HostNotFoundException("Host with id: " + id + " has not been found."));
+
+        return spotifyUserMapper.toDto(spotifyUser);
     }
 
     public Token getTokensByUserId(String userId) {

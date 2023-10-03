@@ -21,19 +21,42 @@ export const tokenLoader = async () => {
 type NewRoom = {
     title: string
 }
-export const createNewRoom = async (room: NewRoom) => {
+export const createNewRoom =  async (room: NewRoom) => {
 
-    const hostId = localStorage.getItem("host_id");
+    // const hostId = localStorage.getItem("host_id");
     const requestRoom = {
-        room: room,
-        userId: localStorage.getItem("host_id")
+        title: room.title,
+        hostId: localStorage.getItem("host_id")
     };
-
-    const response = await fetch("http://localhost:4040/api/rooms/new?hostId="+hostId, {
-        method: "post",
-        body: JSON.stringify(room)
+    const response = await fetch("http://localhost:4040/api/rooms/new", {
+        method: "POST",
+        body: JSON.stringify(requestRoom),
+        headers: {
+            'Content-Type': 'application/json',
+            // "Access-Control-Allow-Origin": "*",
+        },
     })
     //todo redo
-    const responseData = await response.text();
-    return responseData;
+    // const responseData = await response.text();
+    // return responseData;
+
+    // fetch("http://localhost:4040/api/rooms/new", {
+    //     method: "POST",
+    //     body: JSON.stringify(requestRoom),
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         "Access-Control-Allow-Origin": "*",
+    //         "Access-Control-Allow-Methods": "POST"
+    //     },
+    // })
+    //     .then(function(response) {
+    //         return response.json();
+    //     })
+    //     .then(function(responseData) {
+    //         return responseData;
+    //     })
+    //     .catch(function(error) {
+    //         console.error(error);
+    //     });
+
 };
