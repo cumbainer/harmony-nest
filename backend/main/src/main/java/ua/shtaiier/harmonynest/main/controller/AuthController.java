@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
-import ua.shtaiier.harmonynest.main.dto.Token;
+import ua.shtaiier.harmonynest.main.util.Token;
 import ua.shtaiier.harmonynest.main.service.SpotifyUserService;
 import ua.shtaiier.harmonynest.security.SpotifyOAuth2User;
 
@@ -54,14 +54,7 @@ public class AuthController {
     }
 
     @GetMapping("/token")
-    public Token getToken(
-            @RequestParam("userId") String userId
-    ) {
-
-
-//        SpotifyOAuth2User user = (SpotifyOAuth2User)context.getAuthentication().getPrincipal();
-//        response.setHeader("X-Dataverse-key", authorizedClient.getAccessToken().getTokenValue());
-//        return accessTokenRepository.findAll().get(0).getAccessToken();
+    public Token getToken(@RequestParam("hostId") String userId) {
         return userService.getTokensByUserId(userId);
     }
 }

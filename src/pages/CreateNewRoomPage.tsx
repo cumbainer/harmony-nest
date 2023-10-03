@@ -1,6 +1,6 @@
 import CreateNewRoomForm from "../components/CreateNewRoomForm.tsx";
 import {useMutation} from "@tanstack/react-query";
-import {redirect, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {createNewRoom} from "../util/login-util.ts";
 
 const CreateNewRoomPage = (props: { cancel: () => void }) => {

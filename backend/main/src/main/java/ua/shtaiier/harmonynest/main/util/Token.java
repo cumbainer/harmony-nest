@@ -1,4 +1,4 @@
-package ua.shtaiier.harmonynest.main.dto;
+package ua.shtaiier.harmonynest.main.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

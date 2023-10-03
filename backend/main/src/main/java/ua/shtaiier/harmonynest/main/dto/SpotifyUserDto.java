@@ -2,6 +2,7 @@ package ua.shtaiier.harmonynest.main.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import ua.shtaiier.harmonynest.main.util.Token;
 
 @Data
 @Builder

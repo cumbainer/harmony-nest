@@ -6,7 +6,7 @@ export const tokenLoader = async () => {
     const baseTokenUrl = "http://localhost:4040/token";
 
     const hostId = new URLSearchParams(window.location.search).get("id")!;
-    const response = await fetch(baseTokenUrl + "?userId=" + hostId);
+    const response = await fetch(baseTokenUrl + "?hostId=" + hostId);
     const {accessToken, refreshToken} = await response.json();
 
     cookies.set("access_token", accessToken, {

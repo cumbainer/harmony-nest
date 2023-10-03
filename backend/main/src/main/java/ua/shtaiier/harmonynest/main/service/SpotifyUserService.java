@@ -5,16 +5,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import ua.shtaiier.harmonynest.main.domain.SpotifyUser;
 import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
-import ua.shtaiier.harmonynest.main.dto.Token;
+import ua.shtaiier.harmonynest.main.util.Token;
 import ua.shtaiier.harmonynest.main.mapper.SpotifyUserMapper;
 import ua.shtaiier.harmonynest.main.repository.SpotifyUserRepository;
 import ua.shtaiier.harmonynest.security.SpotifyOAuth2User;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

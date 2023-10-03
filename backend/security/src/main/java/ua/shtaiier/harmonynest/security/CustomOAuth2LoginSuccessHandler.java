@@ -34,7 +34,6 @@ public class CustomOAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSucc
             SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
 
         }
-        response.sendRedirect("/test");
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }

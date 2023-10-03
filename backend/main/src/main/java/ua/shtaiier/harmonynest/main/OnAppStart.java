@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import ua.shtaiier.harmonynest.main.domain.Guest;
 import ua.shtaiier.harmonynest.main.domain.Room;
 import ua.shtaiier.harmonynest.main.domain.SpotifyUser;
-import ua.shtaiier.harmonynest.main.dto.Token;
+import ua.shtaiier.harmonynest.main.util.Token;
 import ua.shtaiier.harmonynest.main.repository.RoomRepository;
 
 import java.time.LocalDate;

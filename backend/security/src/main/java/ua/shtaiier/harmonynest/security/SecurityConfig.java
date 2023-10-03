@@ -61,13 +61,12 @@ public class SecurityConfig {
         }));
         http.formLogin(login -> login
                 .loginPage("http://localhost:5173/auth")
-                .defaultSuccessUrl("/test", true)
                 .permitAll()
         );
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/api/rooms").permitAll()
-                .requestMatchers("/test").hasAnyAuthority("OAUTH2_USER")
-                .anyRequest().authenticated()
+                .requestMatchers("/token").permitAll()
+                .anyRequest().permitAll()
         );
         http.oauth2Login(login -> login
                         .defaultSuccessUrl("/user", true)
