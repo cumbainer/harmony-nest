@@ -55,7 +55,7 @@ public class AuthController {
 
     @GetMapping("/token")
     public Token getToken(
-            @RequestParam("userId") String userId,
+            @RequestParam("userId") String userId
     ) {
 
 

@@ -15,7 +15,8 @@ const router = createBrowserRouter([
             {
                 path: "/rooms",
                 element: <RoomsPage/>,
-                loader: loader,
+                id: "rooms",
+                // loader: loader,
             },
             {
                 //todo dispay some text that user is succesfully logined

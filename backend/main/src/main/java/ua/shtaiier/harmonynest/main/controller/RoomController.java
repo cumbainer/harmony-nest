@@ -13,11 +13,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class RoomController {
-
     private final RoomService roomService;
 
     @GetMapping("")
-    public List<RoomDto> getAllRooms() {
+    public List<RoomDto> getAllRooms() throws InterruptedException {
+
         return roomService.getAll();
     }
 
