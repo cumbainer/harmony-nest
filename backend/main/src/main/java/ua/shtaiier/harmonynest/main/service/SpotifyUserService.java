@@ -37,6 +37,15 @@ public class SpotifyUserService {
         return spotifyUserMapper.toDto(spotifyUser);
     }
 
+    public SpotifyUserDto getByUsername(String username) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("email").is(username));
+        SpotifyUser user =mongoTemplate.find(query, SpotifyUser.class).get(0);
+
+
+        return spotifyUserMapper.toDto(user);
+    }
+
     public Token getTokensByUserId(String userId) {
 
         Query query = new Query();

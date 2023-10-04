@@ -6,13 +6,13 @@ import {createNewRoom} from "../util/request-functions.ts";
 const CreateNewRoomPage = (props: { cancel: () => void }) => {
     const navigate = useNavigate();
 
-    const {mutate, isError, error} = useMutation({
+    const {mutate } = useMutation({
         mutationKey: ["rooms", "new"],
         mutationFn: createNewRoom,
         onSuccess: () => {
             // queryClient.invalidateQueries({queryKey: ['rooms']});
 
-            navigate("/roomfgsds");
+            // navigate("/roomfgsds");
         },
 
     });
@@ -20,12 +20,9 @@ const CreateNewRoomPage = (props: { cancel: () => void }) => {
     const handleSubmit = (roomTitle: string) => {
         mutate({title: roomTitle});
     };
+
     return (
-        <>
-            {/*todo after user clicks -> check if he is authed*/}
-            <CreateNewRoomForm onCancel={props.cancel} onSubmit={handleSubmit}/>
-            {error}
-        </>
+        <CreateNewRoomForm onCancel={props.cancel} onSubmit={handleSubmit}/>
     );
 };
 

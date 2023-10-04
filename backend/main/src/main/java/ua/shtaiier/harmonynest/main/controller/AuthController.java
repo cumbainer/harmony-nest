@@ -1,7 +1,9 @@
 package ua.shtaiier.harmonynest.main.controller;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -23,7 +25,7 @@ import java.io.IOException;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final SpotifyUserService userService;
@@ -37,13 +39,20 @@ public class AuthController {
     @GetMapping("/user")
     public String getAuthRedirectData(
             @RegisteredOAuth2AuthorizedClient("spotify") OAuth2AuthorizedClient authorizedClient,
-            Authentication authentication, HttpServletResponse response
+            Authentication authentication, HttpServletResponse response, HttpServletRequest request
     ) throws IOException {
 
         String accessToken = authorizedClient.getAccessToken().getTokenValue();
         String refreshToken = authorizedClient.getRefreshToken().getTokenValue();
         SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
+        SecurityContext context = SecurityContextHolder.getContext();
         SpotifyUserDto createdUser = userService.create(user, accessToken, refreshToken);
+
+//        ]SecurityContextHolder.getContext();
+
+        // Create a new session and add the security context.
+        HttpSession session = request.getSession(true);
+        session.setAttribute("SPRING_SECURITY_CONTEXT", context);
 
         response.sendRedirect("http://localhost:5173/auth/token?id=" + createdUser.getId());
         return "";

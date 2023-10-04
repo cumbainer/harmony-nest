@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -48,6 +49,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(c -> c.disable());
+        http.cors(Customizer.withDefaults());
         http.formLogin(login -> login
                 .loginPage("http://localhost:5173/auth")
                 .permitAll()
@@ -60,26 +62,12 @@ public class SecurityConfig {
         );
         http.oauth2Login(login -> login
                         .defaultSuccessUrl("/user", true)
-//                .successHandler(customOAuth2LoginSuccessHandler)
+                .successHandler(customOAuth2LoginSuccessHandler)
                         .userInfoEndpoint(endpoint -> endpoint
                                 .userService(customOAuth2Service))
         );
 
         return http.build();
-    }
-
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry
-                        .addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("*")
-                        .allowedHeaders("*");
-            }
-        };
     }
 
     @Bean

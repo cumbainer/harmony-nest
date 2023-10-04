@@ -34,7 +34,6 @@ type NewRoom = {
 
 export const createNewRoom =  async (room: NewRoom) => {
 
-    // const hostId = localStorage.getItem("host_id");
     const requestRoom = {
         roomTitle: room.title,
         hostId: localStorage.getItem("host_id")
@@ -44,7 +43,6 @@ export const createNewRoom =  async (room: NewRoom) => {
         body: JSON.stringify(requestRoom),
         headers: {
             'Content-Type': 'application/json',
-            // "Access-Control-Allow-Origin": "*",
         },
     })
     console.log(response)

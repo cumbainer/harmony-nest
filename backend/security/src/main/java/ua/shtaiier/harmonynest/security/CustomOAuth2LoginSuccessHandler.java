@@ -34,6 +34,9 @@ public class CustomOAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSucc
             SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
 
         }
+        String url = "http://localhost:5173/auth/token?id=" + user.getId();
+        getRedirectStrategy().sendRedirect(request, response, url);
         super.onAuthenticationSuccess(request, response, authentication);
+//        response.sendRedirect("/dfs");
     }
 }
