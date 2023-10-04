@@ -1,5 +1,6 @@
 ua\shtaiier\harmonynest\security\CustomOAuth2Service.class
 ua\shtaiier\harmonynest\security\config\SecurityModuleConfig.class
+ua\shtaiier\harmonynest\security\SecurityConfig$1.class
 ua\shtaiier\harmonynest\security\SecurityConfig.class
 ua\shtaiier\harmonynest\security\SpotifyOAuth2User.class
 ua\shtaiier\harmonynest\security\CustomOAuth2LoginSuccessHandler.class

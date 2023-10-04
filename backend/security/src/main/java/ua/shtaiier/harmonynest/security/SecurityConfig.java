@@ -53,9 +53,10 @@ public class SecurityConfig {
                 .permitAll()
         );
         http.authorizeHttpRequests(request -> request
-//                .requestMatchers("/api/rooms").permitAll()
-//                .requestMatchers("/token").permitAll()
-                        .anyRequest().permitAll()
+                .requestMatchers("/api/rooms").permitAll()
+                .requestMatchers("/token").permitAll()
+                .requestMatchers("/auth/check").permitAll()
+                .anyRequest().permitAll()
         );
         http.oauth2Login(login -> login
                         .defaultSuccessUrl("/user", true)
@@ -72,7 +73,11 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
+                registry
+                        .addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("*")
+                        .allowedHeaders("*");
             }
         };
     }

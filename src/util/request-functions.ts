@@ -25,8 +25,7 @@ export const fetchRooms = async () => {
         throw j;
     }
 
-    const responseData = await response.json();
-    return responseData;
+    return await response.json();
 }
 
 type NewRoom = {
@@ -45,7 +44,9 @@ export const createNewRoom =  async (room: NewRoom) => {
         body: JSON.stringify(requestRoom),
         headers: {
             'Content-Type': 'application/json',
+            // "Access-Control-Allow-Origin": "*",
         },
     })
+    console.log(response)
 
 };

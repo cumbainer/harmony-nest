@@ -9,6 +9,7 @@ import ua.shtaiier.harmonynest.main.repository.RoomRepository;
 import ua.shtaiier.harmonynest.main.util.CreateRoomRequest;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -20,7 +21,10 @@ public class RoomService {
     private final SpotifyUserService userService;
 
     public List<RoomDto> getAll() {
-        return roomMapper.toDtos(roomRepository.findAll());
+        List<Room> rooms = roomRepository.findAll().stream()
+                .sorted(Comparator.comparing(room -> !room.isCurrentlyIsPlaying()))
+                .toList();
+        return roomMapper.toDtos(rooms);
     }
 
     public RoomDto create(CreateRoomRequest request) {

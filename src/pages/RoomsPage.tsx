@@ -3,11 +3,17 @@ import {fetchRooms} from "../util/request-functions.ts";
 import {PuffLoader} from "react-spinners";
 import {useQuery} from "@tanstack/react-query";
 import CreateNewRoomPage from "./CreateNewRoomPage.tsx";
-import {useState} from "react";
+import {memo, useContext, useState} from "react";
+import useAuth from "../hooks/useAuth.tsx";
+import {useNavigate} from "react-router-dom";
+import authContext from "../components/store/auth-context.tsx";
+import AuthContext from "../components/store/auth-context.tsx";
 
 const RoomsPage = () => {
     const [formIsActive, setFormIsActive] = useState(false);
+    const navigate = useNavigate();
     const formIsOpenedClasses = formIsActive ? "pointer-events-none blur-sm brightness-50":"";
+    const authContext = useContext(AuthContext);
 
     const {data, isLoading, isError} = useQuery({
         queryKey: ["rooms"],
@@ -31,14 +37,18 @@ const RoomsPage = () => {
     }
 
     const openFormHandler = () => {
-
-
+        if(!authContext.checkAuthentication()) {
+            authContext.displayError();
+            navigate("/auth")
+        }
         setFormIsActive(true);
-
     };
 
     return (
         <>
+            <div className="text-5xl text-white">
+                {authContext.isAuthenticated}
+            </div>
             <div className={`relative ${formIsOpenedClasses}`}>
                 {data && <div className="flex justify-between my-8">
                     <div className="flex items-center gap-2">

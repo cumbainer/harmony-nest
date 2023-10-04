@@ -5,12 +5,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
+import org.springframework.web.bind.annotation.*;
 import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
 import ua.shtaiier.harmonynest.main.service.SpotifyUserService;
 import ua.shtaiier.harmonynest.main.util.Token;
@@ -21,6 +23,7 @@ import java.io.IOException;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final SpotifyUserService userService;
@@ -50,4 +53,18 @@ public class AuthController {
     public Token getToken(@RequestParam("hostId") String userId) {
         return userService.getTokensByUserId(userId);
     }
+
+//todo ADD MULTIPLE USERS FUNCTIONALITY
+
+    @GetMapping("/auth/check")
+    public boolean checkIfUserIsAuthenticated(@RequestParam("hostId") String userId,
+                                              @RequestParam(value = "refreshToken", required = false) String refreshToken) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof OAuth2AuthenticationToken) {
+            OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) authentication;
+            return oauth2Token.isAuthenticated();
+        }
+        return !userId.equals("null") && !refreshToken.equals("null");
+    }
+
 }

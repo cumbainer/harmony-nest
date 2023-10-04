@@ -10,8 +10,9 @@ const CreateNewRoomPage = (props: { cancel: () => void }) => {
         mutationKey: ["rooms", "new"],
         mutationFn: createNewRoom,
         onSuccess: () => {
-            // queryClient.invalidateQueries({queryKey: ['events']});
-            navigate("/rooms");
+            // queryClient.invalidateQueries({queryKey: ['rooms']});
+
+            navigate("/roomfgsds");
         },
 
     });

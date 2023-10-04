@@ -18,9 +18,7 @@ public class RoomController {
     private final RoomService roomService;
 
     @GetMapping("")
-    public List<RoomDto> getAllRooms() throws Exception {
-        Thread.sleep(1000);
-
+    public List<RoomDto> getAllRooms() {
         return roomService.getAll();
     }
 
