@@ -3,19 +3,17 @@ import {fetchRooms} from "../util/request-functions.ts";
 import {PuffLoader} from "react-spinners";
 import {useQuery} from "@tanstack/react-query";
 import CreateNewRoomPage from "./CreateNewRoomPage.tsx";
-import {memo, useContext, useState} from "react";
-import useAuth from "../hooks/useAuth.tsx";
+import {useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import authContext from "../components/store/auth-context.tsx";
-import AuthContext from "../components/store/auth-context.tsx";
+import AuthContext from "../store/auth-context.tsx";
 
 const RoomsPage = () => {
     const [formIsActive, setFormIsActive] = useState(false);
     const navigate = useNavigate();
-    const formIsOpenedClasses = formIsActive ? "pointer-events-none blur-sm brightness-50":"";
+    const formIsOpenedClasses = formIsActive ? "pointer-events-none blur-sm brightness-50" : "";
     const authContext = useContext(AuthContext);
 
-    const {data, isLoading, isError} = useQuery({
+    const {data, isLoading, isError, fetchStatus, status} = useQuery({
         queryKey: ["rooms"],
         queryFn: fetchRooms,
     });
@@ -31,13 +29,14 @@ const RoomsPage = () => {
     if (data) {
         content = <RoomsList rooms={data}/>;
     }
-    if(isError) {
+    if (isError) {
         //todo make better
         content = "An error occured";
     }
 
     const openFormHandler = () => {
-        if(!authContext.checkAuthentication()) {
+        console.log(authContext.checkAuthentication())
+        if (!authContext.checkAuthentication()) {
             authContext.displayError();
             navigate("/auth")
         }
@@ -45,11 +44,8 @@ const RoomsPage = () => {
     };
 
     return (
-        <>
-            <div className="text-5xl text-white">
-                {authContext.isAuthenticated}
-            </div>
-            <div className={`relative ${formIsOpenedClasses}`}>
+        <div className="flex items-center flex-col my-7">
+            <div className={`relative p-4 ${formIsOpenedClasses} `}>
                 {data && <div className="flex justify-between my-8">
                     <div className="flex items-center gap-2">
                         <div className="w-1 h-10 bg-white rounded-lg"></div>
@@ -59,17 +55,18 @@ const RoomsPage = () => {
                     </div>
                     <button
                         className="bg-sky-500 rounded-full text-2xl text-white p-3 font-medium"
-                        onClick={openFormHandler}
-                    >
+                        onClick={openFormHandler} >
                         Create your room
                     </button>
                 </div>}
                 {content}
             </div>
-            {formIsActive && (
-                <CreateNewRoomPage cancel={() => setFormIsActive(false)}/>
-            )}
-        </>
+            <div className="absolute top-0 left-1/4">
+                {formIsActive && (
+                    <CreateNewRoomPage cancel={() => setFormIsActive(false)}/>
+                )}
+            </div>
+        </div>
     );
 };
 export default RoomsPage;

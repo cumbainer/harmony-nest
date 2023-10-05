@@ -25,18 +25,13 @@ public class CustomOAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSucc
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException, ServletException, IOException {
 
         SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
-        //todo handle
-        if (user.getName().contains("g")) {
-
-            List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
-            updatedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
-            Authentication updatedAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), updatedAuthorities);
-            SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
-
-        }
+//        List<GrantedAuthority> updatedAuthorities = new ArrayList<>(authentication.getAuthorities());
+//        updatedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
+        Authentication updatedAuthentication = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), authentication.getAuthorities());
+//        updatedAuthentication.setAuthenticated(true);
+        SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
         String url = "http://localhost:5173/auth/token?id=" + user.getId();
         getRedirectStrategy().sendRedirect(request, response, url);
-        super.onAuthenticationSuccess(request, response, authentication);
-//        response.sendRedirect("/dfs");
+            super.onAuthenticationSuccess(request, response, authentication);
     }
 }

@@ -3,18 +3,17 @@ package ua.shtaiier.harmonynest.main.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import ua.shtaiier.harmonynest.main.dto.SpotifyUserDto;
 import ua.shtaiier.harmonynest.main.service.SpotifyUserService;
 import ua.shtaiier.harmonynest.main.util.Token;
@@ -25,14 +24,12 @@ import java.io.IOException;
 @RestController
 @Slf4j
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "*")
 public class AuthController {
 
     private final SpotifyUserService userService;
 
     @PostMapping("/spotify/login")
     public String loginViaSpotify() {
-
         return "redirect:/login/oauth2/code/spotify";
     }
 
@@ -48,12 +45,6 @@ public class AuthController {
         SecurityContext context = SecurityContextHolder.getContext();
         SpotifyUserDto createdUser = userService.create(user, accessToken, refreshToken);
 
-//        ]SecurityContextHolder.getContext();
-
-        // Create a new session and add the security context.
-        HttpSession session = request.getSession(true);
-        session.setAttribute("SPRING_SECURITY_CONTEXT", context);
-
         response.sendRedirect("http://localhost:5173/auth/token?id=" + createdUser.getId());
         return "";
     }
@@ -66,14 +57,13 @@ public class AuthController {
 //todo ADD MULTIPLE USERS FUNCTIONALITY
 
     @GetMapping("/auth/check")
-    public boolean checkIfUserIsAuthenticated(@RequestParam("hostId") String userId,
-                                              @RequestParam(value = "refreshToken", required = false) String refreshToken) {
+    public boolean checkIfUserIsAuthenticated(@RequestParam("hostId") String userId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication instanceof OAuth2AuthenticationToken) {
-            OAuth2AuthenticationToken oauth2Token = (OAuth2AuthenticationToken) authentication;
-            return oauth2Token.isAuthenticated();
+        if (authentication.getPrincipal() instanceof SpotifyOAuth2User) {
+            SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
+            return user.hasOAuth2UserAuthority();
         }
-        return !userId.equals("null") && !refreshToken.equals("null");
+        return false;
     }
 
 }

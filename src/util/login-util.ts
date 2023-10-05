@@ -1,14 +1,19 @@
-import {redirect} from "react-router-dom";
+import
+{redirect} from "react-router-dom";
 import Cookies from "universal-cookie";
+import axios from "axios";
 
 //todo ADD MULTIPLE USERS FUNCTIONALITY
 export const tokenLoader = async () => {
     const cookies = new Cookies();
-    const baseTokenUrl = "http://localhost:4040/token";
 
     const hostId = new URLSearchParams(window.location.search).get("id")!;
-    const response = await fetch(baseTokenUrl + "?hostId=" + hostId);
-    const {accessToken, refreshToken} = await response.json();
+    const baseTokenUrl = "http://localhost:4040/token?hostId="+hostId;
+    const response = await axios.get(baseTokenUrl, {
+        withCredentials: true
+    });
+    const {accessToken, refreshToken} = response.data;
+
 
     cookies.set("access_token", accessToken, {
         path: "/",
@@ -21,10 +26,10 @@ export const tokenLoader = async () => {
 
 export const checkUserAuthentication = async () => {
     const hostId = localStorage.getItem("host_id");
-    const refreshToken = localStorage.getItem("refresh_token");
-    const response = await fetch("http://localhost:4040/auth/check?hostId=" + hostId + "&refreshToken=" + refreshToken);
 
-    const isAuthenticated = await response.text();
-    return isAuthenticated === "true";
+    const response = await axios.get("http://localhost:4040/auth/check?hostId=" + hostId, {
+        withCredentials: true
+    });
+    return response.data === true;
 };
 

@@ -5,10 +5,12 @@ import {Outlet} from "react-router";
 const RootLayout = () => {
     return (
         <div className={"h-fit"}>
-            {/*<Header />*/}
-            <div className="flex justify-center">
-                {/*<SideMenu />*/}
-                <Outlet  />
+            <Header />
+            <div className="flex">
+                <div className="flex-grow">
+                    <Outlet  />
+                </div>
+                <SideMenu />
             </div>
         </div>
     );

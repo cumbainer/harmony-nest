@@ -1,5 +1,6 @@
 import Login from "../components/Login.tsx";
 import {redirect} from "react-router-dom";
+import axios from "axios";
 
 const LoginPage = () => {
     return (
@@ -9,12 +10,5 @@ const LoginPage = () => {
 export default LoginPage;
 
 export const action = async () => {
-
-    // const response = await fetch("http://localhost:4040/oauth2/authorization/spotify", {
-    //     method: "POST"
-    // });
-    // console.log(response)
-    // return "";
-
     return redirect("http://localhost:4040/oauth2/authorization/spotify");
 };

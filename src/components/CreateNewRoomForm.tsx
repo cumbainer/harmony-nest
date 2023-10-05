@@ -27,7 +27,7 @@ const CreateNewRoomForm = ({onCancel, onSubmit}: Props) => {
                     placeholder:text-gray-500 placeholder:text-2xl px-3"
                            placeholder="Evening chill" ref={titleInputRef}/>
                 </div>
-                <div className="mt-16 flex justify-between">
+                <div className="mt-12 flex justify-between">
                     <button className="bg-none text-2xl text-white p-3 px-10 rounded-xl border border-red-700
                     hover:bg-red-700" onClick={onCancel}>Back
                     </button>

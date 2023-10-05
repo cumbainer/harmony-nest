@@ -1,5 +1,5 @@
 import  {ReactNode, useEffect, useState} from 'react';
-import {checkUserAuthentication} from "../../util/login-util.ts";
+import {checkUserAuthentication} from "../util/login-util.ts";
 import AuthContext from "./auth-context.tsx";
 
 type Props = {
@@ -35,6 +35,7 @@ const AuthContextProvider = ({children}: Props) => {
         displayError: displayAuthenticationError,
         authenticationError: errorAuthenticationFlag
     }
+    console.log(isAuthenticatedFlag)
 
     return (
         <AuthContext.Provider value={authContext}>

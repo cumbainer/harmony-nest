@@ -51,14 +51,15 @@ public class SecurityConfig {
         http.csrf(c -> c.disable());
         http.cors(Customizer.withDefaults());
         http.formLogin(login -> login
-                .loginPage("http://localhost:5173/auth")
-                .permitAll()
+                .disable()
+//                .loginPage("http://localhost:5173/auth")
+//                .permitAll()
         );
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("/api/rooms").permitAll()
                 .requestMatchers("/token").permitAll()
                 .requestMatchers("/auth/check").permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
         );
         http.oauth2Login(login -> login
                         .defaultSuccessUrl("/user", true)

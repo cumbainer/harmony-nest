@@ -27,6 +27,11 @@ public class SpotifyOAuth2User implements OAuth2User {
         return oauth2User.getAuthorities();
     }
 
+    public boolean hasOAuth2UserAuthority() {
+        return getAuthorities().stream()
+                .anyMatch(authority -> "OAUTH2_USER".equals(authority.getAuthority()));
+    }
+
     @Override
     public String getName() {
         return oauth2User.getAttribute("display_name");

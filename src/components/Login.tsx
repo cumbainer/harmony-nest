@@ -1,6 +1,6 @@
 import {Form} from "react-router-dom";
 import {useContext} from "react";
-import AuthContext from "./store/auth-context.tsx";
+import AuthContext from "../store/auth-context.tsx";
 
 const Login = () => {
     const authContext = useContext(AuthContext);

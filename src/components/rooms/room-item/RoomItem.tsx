@@ -10,7 +10,7 @@ const RoomItem = (props: { room: Room }) => {
         "from-blue-950 via-blue-900 to-[#1B1F38]" : "from-[#1B1F39] to-[#1B1F50]";
 
     return (
-        <li className={`bg-[#1B1F38] relative min-w-[70rem] p-3 bg-gradient-to-t ${itemBackground}`}>
+        <li className={`bg-[#1B1F38] relative min-w-[20rem] w-[70rem] p-3 bg-gradient-to-t ${itemBackground}`}>
             <h1 className="text-sky-500 bg-none font-semibold mb-3 text-2xl">Adolf Hitler's <span className="text-white">room</span></h1>
             <div className="flex">
                 <RoomImage isPlaying={room.currentlyIsPlaying} imageUrl={room.image} />

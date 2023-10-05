@@ -5,7 +5,8 @@ import LoginPage, {action as loginAction} from "./pages/LoginPage.tsx";
 import Token from "./pages/Token.tsx";
 import {tokenLoader} from "./util/login-util.ts";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import AuthContextProvider from "./components/store/AuthContextProvider.tsx";
+import AuthContextProvider from "./store/AuthContextProvider.tsx";
+import HostRoomPage from "./pages/HostRoomPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -16,7 +17,12 @@ const router = createBrowserRouter([
                 path: "/rooms",
                 element: <RoomsPage/>,
                 id: "rooms",
-                // loader: loader,
+                children: [
+                    {
+                        path: ":roomId",
+                        element: <HostRoomPage />
+                    }
+                ]
             },
             {
                 //todo dispay some text that user is succesfully logined
@@ -34,7 +40,6 @@ const router = createBrowserRouter([
                         path: "token",
                         element: <Token/>,
                         loader: tokenLoader
-
                     }
                 ]
             },

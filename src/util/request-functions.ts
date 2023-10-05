@@ -1,3 +1,4 @@
+import axios from "axios";
 
 export interface Room {
     id: string;
@@ -15,17 +16,11 @@ export interface RoomType {
 }
 
 export const fetchRooms = async () => {
-    const response = await fetch("http://localhost:4040/api/rooms");
-    if (!response.ok) {
-        const j = {
-            message: 'An error occurred while fetching the events',
-            code: response.status,
-            info: await response.json()
-        };
-        throw j;
-    }
+    const response = await axios.get("http://localhost:4040/api/rooms", {
+        withCredentials: true,
+    });
 
-    return await response.json();
+    return response.data;
 }
 
 type NewRoom = {
@@ -33,18 +28,13 @@ type NewRoom = {
 }
 
 export const createNewRoom =  async (room: NewRoom) => {
-
-    const requestRoom = {
+    const response = await axios.post("http://localhost:4040/api/rooms/new", {
         roomTitle: room.title,
         hostId: localStorage.getItem("host_id")
-    };
-    const response = await fetch("http://localhost:4040/api/rooms/new", {
-        method: "POST",
-        body: JSON.stringify(requestRoom),
+    }, {
+        withCredentials: true,
         headers: {
             'Content-Type': 'application/json',
         },
     })
-    console.log(response)
-
 };
