@@ -20,11 +20,13 @@
     "react-router": "^6.16.0",
     "react-router-dom": "^6.16.0",
     "react-spinners": "^0.13.8",
+    "spotify-web-api-node": "^5.0.2",
     "universal-cookie": "^6.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
+    "@types/spotify-web-api-node": "^5.0.8",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",

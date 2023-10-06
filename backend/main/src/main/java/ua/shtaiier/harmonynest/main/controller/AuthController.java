@@ -40,12 +40,15 @@ public class AuthController {
     ) throws IOException {
 
         String accessToken = authorizedClient.getAccessToken().getTokenValue();
+        log.info(authorizedClient.getAccessToken().getExpiresAt().toString());
         String refreshToken = authorizedClient.getRefreshToken().getTokenValue();
         SpotifyOAuth2User user = (SpotifyOAuth2User) authentication.getPrincipal();
         SecurityContext context = SecurityContextHolder.getContext();
         SpotifyUserDto createdUser = userService.create(user, accessToken, refreshToken);
 
-        response.sendRedirect("http://localhost:5173/auth/token?id=" + createdUser.getId());
+//        response.sendRedirect("http://localhost:5173/auth/token?id=" + createdUser.getId());
+        response.sendRedirect("http://localhost:5173/auth/token?access=" + accessToken + "&refresh="+refreshToken
+        +"&id="+createdUser.getId());
         return "";
     }
 

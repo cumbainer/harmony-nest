@@ -35,7 +35,6 @@ const AuthContextProvider = ({children}: Props) => {
         displayError: displayAuthenticationError,
         authenticationError: errorAuthenticationFlag
     }
-    console.log(isAuthenticatedFlag)
 
     return (
         <AuthContext.Provider value={authContext}>

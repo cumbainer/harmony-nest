@@ -8,19 +8,28 @@ export const tokenLoader = async () => {
     const cookies = new Cookies();
 
     const hostId = new URLSearchParams(window.location.search).get("id")!;
-    const baseTokenUrl = "http://localhost:4040/token?hostId="+hostId;
-    const response = await axios.get(baseTokenUrl, {
-        withCredentials: true
-    });
-    const {accessToken, refreshToken} = response.data;
+    const access = new URLSearchParams(window.location.search).get("access")!;
+    const refresh = new URLSearchParams(window.location.search).get("refresh")!;
+    console.log(access)
+    console.log(refresh)
+    // const baseTokenUrl
+    //     = "http://localhost:4040/token?hostId="+hostId;
+    // const response = await axios.get(baseTokenUrl, {
+    //
+    //     withCredentials: true
+    // });
+    // const {accessToken, refreshToken} = response.data;
 
 
-    cookies.set("access_token", accessToken, {
+    //todo change later
+    cookies.set("access_token", access, {
         path: "/",
         httpOnly: true
     })
     localStorage.setItem("host_id", hostId)
-    localStorage.setItem('refresh_token', refreshToken);
+    localStorage.setItem("access_token", access)
+    // localStorage.setItem('refresh_token', refreshToken);
+    localStorage.setItem('refresh_token', refresh);
     return redirect("/rooms");
 };
 

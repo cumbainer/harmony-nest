@@ -63,7 +63,7 @@ public class SecurityConfig {
         );
         http.oauth2Login(login -> login
                         .defaultSuccessUrl("/user", true)
-                .successHandler(customOAuth2LoginSuccessHandler)
+//                .successHandler(customOAuth2LoginSuccessHandler)
                         .userInfoEndpoint(endpoint -> endpoint
                                 .userService(customOAuth2Service))
         );
