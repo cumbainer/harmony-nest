@@ -1,4 +1,4 @@
-import RoomsList from "../components/rooms/RoomsList.tsx";
+import RoomsList from "../components/rooms/list/RoomsList.tsx";
 import {fetchRooms} from "../util/request-functions.ts";
 import {PuffLoader} from "react-spinners";
 import {useQuery} from "@tanstack/react-query";

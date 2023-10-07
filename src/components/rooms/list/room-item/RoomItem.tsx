@@ -1,4 +1,4 @@
-import {Room} from "../../../util/request-functions.ts";
+import {Room} from "../../../../util/request-functions.ts";
 import RoomImage from "./RoomImage.tsx";
 import RoomCurrentSongInfo from "./RoomCurrentSongInfo.tsx";
 
