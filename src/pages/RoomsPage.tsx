@@ -13,7 +13,7 @@ const RoomsPage = () => {
     const formIsOpenedClasses = formIsActive ? "pointer-events-none blur-sm brightness-50" : "";
     const authContext = useContext(AuthContext);
 
-    const {data, isLoading, isError, fetchStatus, status} = useQuery({
+    const {data, isLoading, isError} = useQuery({
         queryKey: ["rooms"],
         queryFn: fetchRooms,
     });
@@ -44,9 +44,9 @@ const RoomsPage = () => {
     };
 
     return (
-        <div className="flex items-center flex-col my-7">
-            <div className={`relative p-4 ${formIsOpenedClasses} `}>
-                {data && <div className="flex justify-between my-8">
+        <div className="flex items-center flex-col">
+            <div className={`relative ${formIsOpenedClasses} `}>
+                {data && <div className="flex justify-between mb-5">
                     <div className="flex items-center gap-2">
                         <div className="w-1 h-10 bg-white rounded-lg"></div>
                         <h1 className="text-4xl ms-1 text-sky-500 shadow-2xl font-bold">

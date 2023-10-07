@@ -7,7 +7,7 @@ const RootLayout = () => {
         <div className={"h-fit"}>
             <Header />
             <div className="flex">
-                <div className="flex-grow">
+                <div className="flex-grow p-24">
                     <Outlet  />
                 </div>
                 <SideMenu />

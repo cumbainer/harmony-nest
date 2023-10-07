@@ -10,8 +10,6 @@ export const tokenLoader = async () => {
     const hostId = new URLSearchParams(window.location.search).get("id")!;
     const access = new URLSearchParams(window.location.search).get("access")!;
     const refresh = new URLSearchParams(window.location.search).get("refresh")!;
-    console.log(access)
-    console.log(refresh)
     // const baseTokenUrl
     //     = "http://localhost:4040/token?hostId="+hostId;
     // const response = await axios.get(baseTokenUrl, {

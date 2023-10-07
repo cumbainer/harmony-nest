@@ -1,54 +1,59 @@
 import SpotifyWebApi from "spotify-web-api-node";
 import Cookies from "universal-cookie";
 import {useEffect, useState} from "react";
+import useAuth from "../hooks/useAuth.tsx";
 
-const spotifyWebApi = new SpotifyWebApi({
-    clientId: "3ead34cb4e37456b9fce526e1ef6f336",
+const makeCapital = (inputText: string) => {
 
-    accessToken: new Cookies().get("access_token"),
-    refreshToken: new Cookies().get("refresh_token"),
-
-})
-
+    return inputText?.charAt(0).toUpperCase() + inputText?.slice(1);
+}
 const HostRoomPage = () => {
-    const [playerr, setPlayer] = useState();
-
-    spotifyWebApi.play();
+    const token = useAuth();
+    const [track, setCurrentPlayingTrack] = useState();
 
     useEffect(() => {
-
-        const script = document.createElement("script");
-        script.src = "https://sdk.scdn.co/spotify-player.js";
-        script.async = true;
-
-        document.body.appendChild(script);
-
-        window.onSpotifyWebPlaybackSDKReady = () => {
-
-            const player = new window.Spotify.Player({
-                name: 'Web Playback SDK',
-                getOAuthToken: cb => { cb(localStorage.getItem("access_token")!); },
-                volume: 0.5
+        if (token) {
+            const spotifyWebApi = new SpotifyWebApi({
+                accessToken: token,
+                refreshToken: new Cookies().get("refresh_token"),
             });
 
-            setPlayer(player);
-
-            player.addListener('ready', ({ device_id }) => {
-                console.log('Ready with Device ID', device_id);
+            spotifyWebApi.getMyCurrentPlayingTrack().then((track) => {
+                console.log(track.body)
+                setCurrentPlayingTrack(track.body.item);
             });
+        }
+    }, [token]);
 
-            player.addListener('not_ready', ({ device_id }) => {
-                console.log('Device ID has gone offline', device_id);
-            });
+    //todo move this logic somewhere else
 
-            player.connect();
-        };
-    }, []);
 
     return (
-        <div>
+        <>
+            <div className="mx-11">
+                <div className="flex">
+                    <div className="w-1/4">
+                        <img className="rounded-md" src={track?.album.images[0].url} alt=""/>
 
-        </div>
+                    </div>
+                    <div className="flex-grow bg-gradient-to-t from-blue-950 via-[#1C1F3A] to-[#1B1F38] mx-2 rounded-sm">
+                        Content inside the red div
+                    </div>
+                </div>
+                <div className="my-1">
+                    <h1 className="text-md text-white font-semibold">{track?.name}</h1>
+                    <div className="flex space-x-3 items-center font-semibold text-gray-500 text-sm my-1">
+                        <div className="flex-shrink-0">{makeCapital(track?.album.type)}</div>
+                        <span className="text-gray-500 inline-block align-middle">·</span>
+                        <div className="flex-shrink-0">{makeCapital(track?.album.album_type)}</div>
+                        <span className="text-gray-500 inline-block align-middle">·</span>
+                        <div className="flex-shrink-0">{track?.album.release_date.slice(0, 4)}</div>
+                        <span className="text-gray-500 inline-block align-middle">·</span>
+                        <div className="flex-shrink-0 text-sky-500">playing</div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
 
