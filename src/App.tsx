@@ -7,6 +7,7 @@ import {tokenLoader} from "./util/login-util.ts";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import AuthContextProvider from "./store/AuthContextProvider.tsx";
 import HostRoomPage from "./pages/HostRoomPage.tsx";
+import {Theme} from "@radix-ui/themes";
 
 const router = createBrowserRouter([
     {
@@ -19,11 +20,11 @@ const router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: <RoomsPage />
+                        element: <RoomsPage/>
                     },
                     {
                         path: ":roomId",
-                        element: <HostRoomPage />
+                        element: <HostRoomPage/>
                     }
                 ]
             },
@@ -53,11 +54,15 @@ const client = new QueryClient();
 
 const App = () => {
     return (
-        <AuthContextProvider>
-            <QueryClientProvider client={client}>
-                <RouterProvider router={router}/>
-            </QueryClientProvider>
-        </AuthContextProvider>
+        <Theme>
+            <AuthContextProvider>
+
+                <QueryClientProvider client={client}>
+                    <RouterProvider router={router}/>
+                </QueryClientProvider>
+            </AuthContextProvider>
+        </Theme>
+
     )
 }
 

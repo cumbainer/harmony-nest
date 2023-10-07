@@ -11,8 +11,8 @@ const makeCapital = (inputText: string) => {
 const HostRoomPage = () => {
     const token = useAuth();
     const [track, setCurrentPlayingTrack] = useState();
-    const [isPlaying, setIsPlaying] = useState<boolean>(null);
-    const [spotifyApi, setSpotifyApi] = useState<SpotifyWebApi>(null);
+    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [spotifyApi, setSpotifyApi] = useState<SpotifyWebApi>();
 
     useEffect(() => {
         if (token) {
@@ -55,7 +55,7 @@ const HostRoomPage = () => {
                             />
                         </div>
                         <div className="flex-grow bg-gradient-to-t from-blue-950 via-[#1C1F3A] to-[#1B1F38] mx-2 rounded-sm
-                        flex items-center justify-center">
+                        flex items-center justify-center relative">
                             <Player
                                 isFavourited={true}
                                 isPlaying={isPlaying}
