@@ -71,8 +71,10 @@ const HostRoomPage = () => {
                             <div className="flex-shrink-0">{makeCapital(track.album.album_type)}</div>
                             <span className="text-gray-500 inline-block align-middle">·</span>
                             <div className="flex-shrink-0">{track.album.release_date.slice(0, 4)}</div>
-                            <span className="text-gray-500 inline-block align-middle">·</span>
-                            <div className="flex-shrink-0 text-sky-500">playing</div>
+                            {/*{isPlaying && <>*/}
+                            {/*    <span className="text-gray-500 inline-block align-middle">·</span>*/}
+                            {/*    <div className="flex-shrink-0 text-sky-500">playing</div>*/}
+                            {/*</>}*/}
                         </div>
                     </div>
                 </div>

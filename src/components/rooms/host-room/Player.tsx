@@ -9,7 +9,10 @@ import {
     faVolumeHigh
 } from "@fortawesome/free-solid-svg-icons";
 import {faHeart} from "@fortawesome/free-solid-svg-icons/faHeart";
-import {Slider} from "@radix-ui/themes";
+import {Slider as SliderVolume} from '@radix-ui/themes';
+import * as Slider from '@radix-ui/react-slider';
+
+import "./slider.css";
 
 type Props = {
     isPlaying: boolean,
@@ -19,19 +22,24 @@ type Props = {
 const Player = ({isFavourited, isPlaying, togglePlayer} : Props) => {
 
     return (
-        <>
+        <div>
             <div className="absolute top-5 right-10 items-center flex">
                 <FontAwesomeIcon icon={faVolumeHigh} color={"white"} size="lg" className="me-3"/>
-                <Slider
-                    defaultValue={[75]}
-                    min={0}
-                    max={100}
-                    step={0.1}
-                    className="w-36"
-                />
+                <Slider.Root className="SliderRoot w-36" defaultValue={[50]} max={100} step={1}>
+                    <Slider.Track className="SliderTrack">
+                        <Slider.Range className="SliderRange" />
+                    </Slider.Track>
+                    <Slider.Thumb className="SliderThumb" aria-label="Volume" />
+                </Slider.Root>
             </div>
+            <SliderVolume
+                defaultValue={[75]}
+                min={0}
+                max={100}
+                step={0.1}
+                className="w-full inset-0 transform scale-125 mb-6"
+             />
             <div className="flex items-center justify-center gap-12 relative">
-
                 {isFavourited ? <FontAwesomeIcon icon={faHeart} size={"2xl"} color="#31c469" className="cursor-pointer"/> :
                     <FontAwesomeIcon icon={faHeart} size={"2xl"} color="white" className="cursor-pointer"/>}
                 <FontAwesomeIcon icon={faRepeat} size={"2xl"} color="white" className="cursor-pointer"/>
@@ -44,8 +52,9 @@ const Player = ({isFavourited, isPlaying, togglePlayer} : Props) => {
                 <FontAwesomeIcon icon={faArrowRight} size={"2xl"} color="white" className="cursor-pointer"/>
                 <FontAwesomeIcon icon={faShuffle} size={"2xl"} color="white" className="cursor-pointer"/>
             </div>
-        </>
+        </div>
     );
 };
 
 export default Player;
+
