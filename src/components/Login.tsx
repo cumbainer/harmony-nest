@@ -7,7 +7,7 @@ const Login = () => {
 
     return (
         <Form method="post">
-            <div className="overflow-x-hidden h-screen flex flex-col">
+            <div className="overflow-x-hidden h-screen absolute flex flex-col top-0 left-1/3">
                 {authContext.authenticationError &&
                     <div className="h-50 bg-red-700 text-white text-xl flex items-center justify-center w-screen">
                         Please login via Spotify first, before creating room!
