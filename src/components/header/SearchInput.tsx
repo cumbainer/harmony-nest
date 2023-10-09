@@ -3,18 +3,23 @@ import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingG
 import SearchResultList from "./SearchResultList.tsx";
 import {useEffect, useState} from "react";
 import useSpotifyApi from "../../hooks/useSpotifyApi.tsx";
+import SearchResultsSelections from "../SearchResultsSelections.tsx";
+import {SearchOption} from "../../util/options.ts";
 
 const SearchInput = () => {
     const {spotifyWebApi} = useSpotifyApi();
     const [inputQuery, setInputQuery] = useState("");
-    const [searchResults, setSearchResults] = useState();
+    const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>();
+    const [selectedOption, setSelectedOption] = useState(SearchOption.Track)
+
     useEffect(() => {
         if(spotifyWebApi) {
             if(inputQuery.trim().length > 0) {
                 spotifyWebApi.search(inputQuery, ['album', 'artist', 'playlist', 'track', 'show', 'episode'])
                     .then(data => {
+
                         console.log(data.body)
-                        setSearchResults(data.body.tracks.items)
+                        setSearchResults(data.body)
                     })
             } else {
                 setSearchResults(null);
@@ -38,7 +43,11 @@ const SearchInput = () => {
                     style={{color: "#ffffff", zIndex: 1}}
                 />}
             </div>
-            <SearchResultList items={searchResults}/>
+            <div className="h-fit p-3 space-y-1 w-[35rem] bg-[#1B1F38] absolute top-8 z-20">
+                <SearchResultsSelections selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
+                <SearchResultList response={searchResults} selectedOption={selectedOption}/>
+
+            </div>
         </div>
     );
 };

@@ -22,10 +22,6 @@ const HostRoomPage = () => {
         }
     }, []);
 
-    console.log("Re-rdner")
-    // console.log(track)
-    // console.log(isPlaying)
-
     const togglePlayer = () => {
         if (isPlaying) {
             spotifyWebApi.pause();
