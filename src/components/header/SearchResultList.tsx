@@ -1,4 +1,6 @@
 import {SearchOption} from "../../util/options.ts";
+import SearchResultItem from "./SearchResultItem.tsx";
+import {ScrollArea} from "@radix-ui/themes";
 
 type Props = {
     selectedOption: SearchOption;
@@ -10,53 +12,54 @@ const SearchResultList = ({response, selectedOption}: Props) => {
     if (response) {
         switch (selectedOption) {
             case SearchOption.Track:
-                content = <ul className="">
-                    {response.tracks?.items.map(item => {
+                content = response.tracks?.items.map(item => {
                         return (
-                            <li key={item.id} className={"text-white"}>
-                                {`Tracks ` + item.name}
-                                <img src={item.album.images[2].url} alt=""/>
-                            </li>
+                           <SearchResultItem
+                               key={item.id}
+                               title={item.name}
+                               image={item.album.images[2].url}
+                               authors={item.artists}
+                           />
                         );
-                    })}
-                </ul>
+                    })
                 break;
             case SearchOption.Album:
-                content = <ul className="">
-                    {response.albums?.items.map(item => {
+                content = response.albums?.items.map(item => {
                         return (
                             <li key={item.id} className={"text-white"}>
                                 {`Albums ` + item.name}
                                 <img src={item.images[2].url} alt=""/>
                             </li>
                         );
-                    })}
-                </ul>
+                    })
                 break;
             case SearchOption.Artist:
-                content = <ul className="">
-                    {response.albums?.items.map(item => {
+                content = response.artists?.items.map(item => {
                         return (
                             <li key={item.id} className={"text-white"}>{item.name}</li>
                         );
-                    })}
-                </ul>
+                    })
                 break;
             case SearchOption.Playlist:
-                content = <ul className="">
-                    {response.albums?.items.map(item => {
-                        return (
-                            <li key={item.id} className={"text-white"}>{item.name}</li>
-                        );
-                    })}
-                </ul>
+                content = response.playlists?.items.map(item => {
+                    return (
+                        <li key={item.id} className={"text-white"}>{item.name}</li>
+                    );
+                })
                 break;
         }
     }
 
     return (
         <>
-            {response ? content : "No items found"}
+            {/*//todo check not response, but if tracks are selected now - check the length of tracks*/}
+            {response ?
+                <ScrollArea className="h-40" type="always" scrollbars="vertical">
+                    <ul className="space-y-4 h-96">
+                        {content}
+                    </ul>
+                </ScrollArea>
+                : <h1 className="text-white">No items found</h1>}
         </>
     );
 };

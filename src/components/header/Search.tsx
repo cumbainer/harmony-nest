@@ -6,7 +6,7 @@ import useSpotifyApi from "../../hooks/useSpotifyApi.tsx";
 import SearchResultsSelections from "../SearchResultsSelections.tsx";
 import {SearchOption} from "../../util/options.ts";
 
-const SearchInput = () => {
+const Search = () => {
     const {spotifyWebApi} = useSpotifyApi();
     const [inputQuery, setInputQuery] = useState("");
     const [searchResults, setSearchResults] = useState<SpotifyApi.SearchResponse>();
@@ -43,7 +43,7 @@ const SearchInput = () => {
                     style={{color: "#ffffff", zIndex: 1}}
                 />}
             </div>
-            <div className="h-fit p-3 space-y-1 w-[35rem] bg-[#1B1F38] absolute top-8 z-20">
+            <div className="h-fit p-3 space-y-1 w-[30rem] bg-[#1B1F38] absolute top-8 z-20">
                 <SearchResultsSelections selectedOption={selectedOption} setSelectedOption={setSelectedOption}/>
                 <SearchResultList response={searchResults} selectedOption={selectedOption}/>
 
@@ -52,4 +52,4 @@ const SearchInput = () => {
     );
 };
 
-export default SearchInput;
+export default Search;
