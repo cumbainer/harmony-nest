@@ -1,43 +1,30 @@
-import SpotifyWebApi from "spotify-web-api-node";
-import Cookies from "universal-cookie";
-import {useEffect, useState} from "react";
-import useAuth from "../hooks/useAuth.tsx";
+import {useState} from "react";
 import Player from "../components/rooms/host-room/Player.tsx";
+import useSpotifyApi from "../hooks/useSpotifyApi.tsx";
 
 const makeCapital = (inputText: string) => {
     return inputText?.charAt(0).toUpperCase() + inputText?.slice(1);
 };
 
 const HostRoomPage = () => {
-    const token = useAuth();
+    const {spotifyWebApi} = useSpotifyApi();
     const [track, setCurrentPlayingTrack] = useState();
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-    const [spotifyApi, setSpotifyApi] = useState<SpotifyWebApi>();
+    if(spotifyWebApi) {
+    spotifyWebApi.getMyCurrentPlayingTrack().then((response) => {
+        const currentTrack = response.body.item;
+        const playing = response.body.is_playing;
 
-    useEffect(() => {
-        if (token) {
-            const spotifyWebApi = new SpotifyWebApi({
-                accessToken: token,
-                refreshToken: new Cookies().get("refresh_token"),
-            });
-
-            spotifyWebApi.getMyCurrentPlayingTrack().then((response) => {
-                const currentTrack = response.body.item;
-                const playing = response.body.is_playing;
-
-                setCurrentPlayingTrack(currentTrack);
-                setIsPlaying(playing);
-            });
-
-            setSpotifyApi(spotifyWebApi);
-        }
-    }, [token]);
+        setCurrentPlayingTrack(currentTrack);
+        setIsPlaying(playing);
+    });
+    }
 
     const togglePlayer = () => {
         if (isPlaying) {
-            spotifyApi.pause();
+            spotifyWebApi.pause();
         } else {
-            spotifyApi.play();
+            spotifyWebApi.play();
         }
         setIsPlaying(!isPlaying);
     };

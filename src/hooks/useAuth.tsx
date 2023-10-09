@@ -19,7 +19,6 @@ const useAuth = () => {
         fetchTokens();
     }, []);
 
-    // Return the access token when it's available
     return accessToken;
 };
 

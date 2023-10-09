@@ -1,25 +1,20 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import {faLanguage} from "@fortawesome/free-solid-svg-icons/faLanguage";
 import {useContext} from "react";
-import AuthContext from "../store/auth-context.tsx";
+import AuthContext from "../../store/auth-context.tsx";
+import SearchInput from "./SearchInput.tsx";
 
 const Header = () => {
     const {isAuthenticated} = useContext(AuthContext);
     return (
         <>
             {isAuthenticated && (
-                <div className="absolute top-0 w-full bg-[#1B1F38] h-16 p-4 flex items-center">\
+                <div className="absolute top-0 w-full bg-[#1B1F38] h-16 p-4 flex items-center">
                     {/*todo hide icon where the text is approaching*/}
-                    <div className="mx-32 relative">
-                        <input type="text" className={`bg-[#1B1F38] p-3 border-2 rounded-lg text-zinc-200 border-[#1D82CC]
-                focus:outline-none focus:border-sky-400 font-semibold w-64 mx-1 placeholder:text-gray-500
-                placeholder:text-lg placeholder:mx-10 h-8 text-lg`} placeholder={"Search songs"}/>
-                        <FontAwesomeIcon className={"absolute top-1/2 transform -translate-y-1/2 right-3"}
-                                         icon={faMagnifyingGlass} size="lg" style={{color: "#ffffff",}}/>
-                    </div>
+                    <SearchInput />
                     <div className="mx-5">
-                        <h1 className="text-sky-500 font-semibold">Harmony Nest <span className="text-white"> : listen to music with your friends</span>
+                        <h1 className="text-sky-500 font-semibold">Harmony Nest <span className="text-white">
+                            : listen to music with your friends</span>
                         </h1>
                     </div>
                     <div className="me-20 absolute right-0 text-white">
