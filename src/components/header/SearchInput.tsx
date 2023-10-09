@@ -4,10 +4,7 @@ import SearchResultList from "./SearchResultList.tsx";
 import {useEffect, useState} from "react";
 import useSpotifyApi from "../../hooks/useSpotifyApi.tsx";
 
-type Props = {
-    setRef: (ref: string) => string
-}
-const SearchInput = ({setRef}: Props) => {
+const SearchInput = () => {
     const {spotifyWebApi} = useSpotifyApi();
     const [inputQuery, setInputQuery] = useState("");
     const [searchResults, setSearchResults] = useState();
@@ -19,6 +16,8 @@ const SearchInput = ({setRef}: Props) => {
                         console.log(data.body)
                         setSearchResults(data.body.tracks.items)
                     })
+            } else {
+                setSearchResults(null);
             }
         }
     }, [inputQuery, spotifyWebApi]);
@@ -32,12 +31,12 @@ const SearchInput = ({setRef}: Props) => {
             placeholder:text-lg placeholder:mx-10 h-8 text-lg`}
                     placeholder="Search songs" onChange={(event) => {setInputQuery(event.target.value)}}
                 />
-                <FontAwesomeIcon
+                {!inputQuery && <FontAwesomeIcon
                     className="absolute top-1/2 transform -translate-y-1/2 right-3"
                     icon={faMagnifyingGlass}
                     size="lg"
                     style={{color: "#ffffff", zIndex: 1}}
-                />
+                />}
             </div>
             <SearchResultList items={searchResults}/>
         </div>

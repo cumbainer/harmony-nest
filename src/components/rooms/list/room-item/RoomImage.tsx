@@ -1,26 +1,25 @@
 
+const baseRoomStyles = {
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    width: '200px',
+    height: '200px',
+    borderRadius: '10px',
+}
+
 const RoomImage = (props: {isPlaying: boolean, imageUrl: string}) => {
-    const roomImageStyle = {
+    const isPlayingRoomImage = {
+        ...baseRoomStyles,
         backgroundImage: `url(${props.imageUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        width: '200px',
-        height: '200px',
-        borderRadius: '10px',
     };
 
-    const a = {
+    const idleRoomImage = {
+        ...baseRoomStyles,
         backgroundColor: `#13182B`,
-        // backgroundImage: `url("porn"})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        width: '200px',
-        height: '200px',
-        borderRadius: '10px',
     };
 
     return (
-        <div style={props.isPlaying ? roomImageStyle : a}></div>
+        <div style={props.isPlaying ? isPlayingRoomImage : idleRoomImage}></div>
     );
 };
 

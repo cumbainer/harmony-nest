@@ -1,9 +1,11 @@
 import Login from "../components/Login.tsx";
-import {redirect} from "react-router-dom";
+import {Form, redirect} from "react-router-dom";
 
 const LoginPage = () => {
     return (
-        <Login/>
+        <Form method="post" className="">
+            <Login />
+        </Form>
     );
 };
 export default LoginPage;

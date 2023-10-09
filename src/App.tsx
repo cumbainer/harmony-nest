@@ -1,5 +1,5 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import RootLayout from "./pages/RootLayout.tsx";
+import ProtectedRoutesLayout from "./pages/ProtectedRoutesLayout.tsx";
 import RoomsPage from "./pages/RoomsPage.tsx";
 import LoginPage, {action as loginAction} from "./pages/LoginPage.tsx";
 import Token from "./pages/Token.tsx";
@@ -11,19 +11,28 @@ import {Theme} from "@radix-ui/themes";
 
 const router = createBrowserRouter([
     {
+        path: "/auths",
+        element: <LoginPage/>,
+        action: loginAction
+    },
+    {
+        path: "/rooms",
+        element: <RoomsPage/>,
+        // id: "rooms"
+    },
+
+    {
         path: "/",
-        element: <RootLayout/>,
+        element: <ProtectedRoutesLayout/>,
         children: [
             {
-                path: "/rooms",
-                id: "rooms",
+                // path: "/rooms",
+                // id: "rooms",
                 children: [
+
                     {
-                        index: true,
-                        element: <RoomsPage/>
-                    },
-                    {
-                        path: ":roomId",
+                        id: "rooms",
+                        path: "/rooms/:roomId",
                         element: <HostRoomPage/>
                     }
                 ]
@@ -34,11 +43,6 @@ const router = createBrowserRouter([
                 // element: <LoginPage/>,
                 // action: loginAction,
                 children: [
-                    {
-                        index: true,
-                        element: <LoginPage/>,
-                        action: loginAction
-                    },
                     {
                         //todo make this page only available for redirect
                         path: "token",

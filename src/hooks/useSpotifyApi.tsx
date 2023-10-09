@@ -1,10 +1,10 @@
-import useAuth from "./useAuth.tsx";
+import useAuthToken from "./useAuthToken.tsx";
 import {useEffect, useState} from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import Cookies from "universal-cookie";
 
 const UseSpotifyApi = () => {
-    const token = useAuth();
+    const token = useAuthToken();
     const [spotifyApi, setSpotifyApi] = useState<SpotifyWebApi>();
 
     useEffect(() => {
