@@ -1,65 +1,92 @@
 import {SearchOption} from "../../util/options.ts";
 import SearchResultItem from "./SearchResultItem.tsx";
 import {ScrollArea} from "@radix-ui/themes";
+import {PuffLoader} from "react-spinners";
 
 type Props = {
+    isLoading: boolean;
     selectedOption: SearchOption;
-    response: SpotifyApi.SearchResponse,
-}
+    response?: SpotifyApi.SearchResponse;
+};
 
-const SearchResultList = ({response, selectedOption}: Props) => {
+const SearchResultList = ({isLoading, response, selectedOption}: Props) => {
     let content;
+
     if (response) {
+        let selectedItems = [];
         switch (selectedOption) {
             case SearchOption.Track:
-                content = response.tracks?.items.map(item => {
-                        return (
-                           <SearchResultItem
-                               key={item.id}
-                               title={item.name}
-                               image={item.album.images[2].url}
-                               authors={item.artists}
-                           />
-                        );
-                    })
+                selectedItems = response.tracks?.items || [];
                 break;
             case SearchOption.Album:
-                content = response.albums?.items.map(item => {
+                selectedItems = response.albums?.items || [];
+                break;
+            case SearchOption.Artist:
+                selectedItems = response.artists?.items || [];
+                break;
+            case SearchOption.Playlist:
+                selectedItems = response.playlists?.items || [];
+                break;
+            default:
+                selectedItems = [];
+                break;
+        }
+
+        const hasItems = selectedItems.length > 0;
+
+        content = hasItems
+            ? selectedItems.map((item) => {
+                switch (selectedOption) {
+                    case SearchOption.Track:
+                        return (
+                            <SearchResultItem
+                                key={item.id}
+                                title={item.name}
+                                image={item.album.images[2].url}
+                                authors={item.artists}
+                            />
+                        );
+                    case SearchOption.Album:
                         return (
                             <li key={item.id} className={"text-white"}>
                                 {`Albums ` + item.name}
                                 <img src={item.images[2].url} alt=""/>
                             </li>
                         );
-                    })
-                break;
-            case SearchOption.Artist:
-                content = response.artists?.items.map(item => {
+                    case SearchOption.Artist:
                         return (
-                            <li key={item.id} className={"text-white"}>{item.name}</li>
+                            <li key={item.id} className={"text-white"}>
+                                {item.name}
+                            </li>
                         );
-                    })
-                break;
-            case SearchOption.Playlist:
-                content = response.playlists?.items.map(item => {
-                    return (
-                        <li key={item.id} className={"text-white"}>{item.name}</li>
-                    );
-                })
-                break;
-        }
+                    case SearchOption.Playlist:
+                        return (
+                            <li key={item.id} className={"text-white"}>
+                                {item.name}
+                            </li>
+                        );
+                    default:
+                        return null;
+                }
+            })
+            : <h1 className="text-white">No items found</h1>;
     }
 
     return (
         <>
-            {/*//todo check not response, but if tracks are selected now - check the length of tracks*/}
-            {response ?
+            {response && (
                 <ScrollArea className="h-40" type="always" scrollbars="vertical">
-                    <ul className="space-y-4 h-96">
-                        {content}
-                    </ul>
+                    {isLoading ? (
+                        <div className="flex items-center justify-center h-96">
+                            <PuffLoader color={"rgb(120, 156, 224)"} size={100}/>
+                        </div>
+                    ) : (
+                        <div className="h-96">
+                            <ul className="space-y-4">{content}</ul>
+                        </div>
+                    )}
                 </ScrollArea>
-                : <h1 className="text-white">No items found</h1>}
+            )}
         </>
     );
 };
