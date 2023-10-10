@@ -42,28 +42,36 @@ const SearchResultList = ({isLoading, response, selectedOption}: Props) => {
                             <SearchResultItem
                                 key={item.id}
                                 title={item.name}
-                                image={item.album.images[2].url}
+                                image={item.album.images[0].url}
                                 authors={item.artists}
                             />
                         );
                     case SearchOption.Album:
                         return (
-                            <li key={item.id} className={"text-white"}>
-                                {`Albums ` + item.name}
-                                <img src={item.images[2].url} alt=""/>
-                            </li>
+                            <SearchResultItem
+                                key={item.id}
+                                title={item.name}
+                                image={item.images[0].url}
+                                authors={item.artists}
+                            />
                         );
                     case SearchOption.Artist:
                         return (
-                            <li key={item.id} className={"text-white"}>
-                                {item.name}
-                            </li>
+                            <SearchResultItem
+                                key={item.id}
+                                title={item.name}
+                                image={item.images[0]?.url}
+                                genres={item.genres}
+                            />
                         );
                     case SearchOption.Playlist:
                         return (
-                            <li key={item.id} className={"text-white"}>
-                                {item.name}
-                            </li>
+                            <SearchResultItem
+                                key={item.id}
+                                title={item.name}
+                                image={item.images[0].url}
+                                ownerName={item.owner.display_name}
+                            />
                         );
                     default:
                         return null;
@@ -75,7 +83,7 @@ const SearchResultList = ({isLoading, response, selectedOption}: Props) => {
     return (
         <>
             {response && (
-                <ScrollArea className="h-40" type="always" scrollbars="vertical">
+                <ScrollArea className="h-46" type="always" scrollbars="vertical">
                     {isLoading ? (
                         <div className="flex items-center justify-center h-96">
                             <PuffLoader color={"rgb(120, 156, 224)"} size={100}/>

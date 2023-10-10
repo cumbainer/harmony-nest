@@ -14,6 +14,7 @@ const fetchData = (spotifyWebApiParam: SpotifyWebApi, searchQueryParam: string) 
             return spotifyWebApiParam
                 .search(searchQueryParam, ['album', 'artist', 'playlist', 'track', 'show', 'episode'], {limit: 50})
                 .then(data => {
+                    console.log(data.body)
                     return data.body;
                 });
         }
