@@ -13,6 +13,7 @@ const HostRoomPage = () => {
     useEffect(() => {
         if (spotifyWebApi) {
             spotifyWebApi.getMyCurrentPlayingTrack().then((response) => {
+                console.log( response.body.item  )
                 const currentTrack = response.body? response.body.item : null;
                 const playing = response.body? response.body.is_playing : false;
 
@@ -20,7 +21,7 @@ const HostRoomPage = () => {
                 setIsPlaying(playing);
             });
         }
-    }, []);
+    }, [spotifyWebApi]);
 
     const togglePlayer = () => {
         if (isPlaying) {
@@ -37,7 +38,8 @@ const HostRoomPage = () => {
                 <div className="w-1/4">
                     <img
                         className="rounded-md"
-                        src={track ? track.album.images[0]?.url : "https://www.thepinknews.com/wp-content/uploads/2019/06/billy-herrington.jpg"}
+                        src={track ? track.album.images[0]?.url :
+                            "https://www.thepinknews.com/wp-content/uploads/2019/06/billy-herrington.jpg"}
                         alt=""
                     />
                 </div>
@@ -58,10 +60,6 @@ const HostRoomPage = () => {
                     <div className="flex-shrink-0">{makeCapital(track.album.album_type)}</div>
                     <span className="text-gray-500 inline-block align-middle">·</span>
                     <div className="flex-shrink-0">{track.album.release_date.slice(0, 4)}</div>
-                    {/*{isPlaying && <>*/}
-                    {/*    <span className="text-gray-500 inline-block align-middle">·</span>*/}
-                    {/*    <div className="flex-shrink-0 text-sky-500">playing</div>*/}
-                    {/*</>}*/}
                 </div>
             </div>}
         </div>

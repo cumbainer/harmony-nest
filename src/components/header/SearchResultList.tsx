@@ -32,10 +32,8 @@ const SearchResultList = ({isLoading, response, selectedOption}: Props) => {
                 break;
         }
 
-        const hasItems = selectedItems.length > 0;
-
-        content = hasItems
-            ? selectedItems.map((item) => {
+        content = selectedItems.length > 0 ?
+            selectedItems.map((item) => {
                 switch (selectedOption) {
                     case SearchOption.Track:
                         return (
@@ -44,7 +42,8 @@ const SearchResultList = ({isLoading, response, selectedOption}: Props) => {
                                 title={item.name}
                                 image={item.album.images[0].url}
                                 authors={item.artists}
-                            />
+                                id={item.id}
+                                type={SearchOption.Track}/>
                         );
                     case SearchOption.Album:
                         return (
@@ -53,6 +52,8 @@ const SearchResultList = ({isLoading, response, selectedOption}: Props) => {
                                 title={item.name}
                                 image={item.images[0].url}
                                 authors={item.artists}
+                                id={item.id}
+                                type={SearchOption.Album}
                             />
                         );
                     case SearchOption.Artist:
@@ -62,6 +63,8 @@ const SearchResultList = ({isLoading, response, selectedOption}: Props) => {
                                 title={item.name}
                                 image={item.images[0]?.url}
                                 genres={item.genres}
+                                id={item.id}
+                                type={SearchOption.Artist}
                             />
                         );
                     case SearchOption.Playlist:
@@ -71,6 +74,8 @@ const SearchResultList = ({isLoading, response, selectedOption}: Props) => {
                                 title={item.name}
                                 image={item.images[0].url}
                                 ownerName={item.owner.display_name}
+                                id={item.id}
+                                type={SearchOption.Playlist}
                             />
                         );
                     default:
