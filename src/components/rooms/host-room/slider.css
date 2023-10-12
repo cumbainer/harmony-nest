@@ -1,5 +1,5 @@
-@import '@radix-ui/colors/black-alpha.css';
-@import '@radix-ui/colors/violet.css';
+@import "@radix-ui/colors/black-alpha.css";
+@import "@radix-ui/colors/violet.css";
 
 .SliderRoot {
     position: relative;
@@ -21,7 +21,7 @@
 
 .SliderRange {
     position: absolute;
-    background-color: #2382DB;
+    background-color: #2382db;
     border-radius: 9999px;
     height: 100%;
 }

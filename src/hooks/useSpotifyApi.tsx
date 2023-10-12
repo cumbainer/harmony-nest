@@ -1,5 +1,5 @@
 import useAuthToken from "./useAuthToken.tsx";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import SpotifyWebApi from "spotify-web-api-node";
 import Cookies from "universal-cookie";
 
@@ -13,7 +13,7 @@ const UseSpotifyApi = () => {
                 accessToken: token,
                 refreshToken: new Cookies().get("refresh_token"),
             });
-            if(spotifyWebApi) {
+            if (spotifyWebApi) {
                 setSpotifyApi(spotifyWebApi);
             }
         }
@@ -21,8 +21,7 @@ const UseSpotifyApi = () => {
 
     return {
         spotifyWebApi: spotifyApi,
-
-    }
+    };
 };
 
 export default UseSpotifyApi;

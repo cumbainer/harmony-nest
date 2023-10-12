@@ -8,11 +8,11 @@ export interface Room {
     image: string;
     guests: [];
     songsListened: number;
-    ownerName: string
+    ownerName: string;
 }
 
 export interface RoomType {
-    rooms: Room[]
+    rooms: Room[];
 }
 
 export const fetchRooms = async () => {
@@ -21,20 +21,24 @@ export const fetchRooms = async () => {
     });
 
     return response.data;
-}
+};
 
 type NewRoom = {
-    title: string
-}
+    title: string;
+};
 
-export const createNewRoom =  async (room: NewRoom) => {
-    const response = await axios.post("http://localhost:4040/api/rooms/new", {
-        roomTitle: room.title,
-        hostId: localStorage.getItem("host_id")
-    }, {
-        withCredentials: true,
-        headers: {
-            'Content-Type': 'application/json',
+export const createNewRoom = async (room: NewRoom) => {
+    const response = await axios.post(
+        "http://localhost:4040/api/rooms/new",
+        {
+            roomTitle: room.title,
+            hostId: localStorage.getItem("host_id"),
         },
-    })
+        {
+            withCredentials: true,
+            headers: {
+                "Content-Type": "application/json",
+            },
+        },
+    );
 };

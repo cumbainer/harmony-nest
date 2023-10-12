@@ -1,5 +1,5 @@
 import Login from "../components/Login.tsx";
-import {Form, redirect} from "react-router-dom";
+import { Form, redirect } from "react-router-dom";
 
 const LoginPage = () => {
     return (

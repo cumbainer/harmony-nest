@@ -13,7 +13,7 @@ const useAuthToken = () => {
                 });
                 setAccessToken(response.data.accessToken);
             } catch (error) {
-                throw new Error("Error fetching token: "+ error);
+                throw new Error("Error fetching token: " + error);
             }
         };
         fetchTokens();

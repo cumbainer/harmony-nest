@@ -1,16 +1,18 @@
-import {SearchOption} from "../util/options.ts";
-
+import { SearchOption } from "../util/options.ts";
 
 type Props = {
-    selectedOption: SearchOption,
-    setSelectedOption: (option: SearchOption) => void
-}
-const SearchResultsSelections = ({ selectedOption, setSelectedOption }: Props) => {
+    selectedOption: SearchOption;
+    setSelectedOption: (option: SearchOption) => void;
+};
+const SearchResultsSelections = ({
+    selectedOption,
+    setSelectedOption,
+}: Props) => {
     return (
         <div className="flex mx-2 gap-6">
             <button
                 className={`mb-5 text-white font-medium text-xl p-2.5 rounded-lg border-sky-600 border w-24 ${
-                    selectedOption === 'Track' ? 'bg-sky-500' : 'bg-none'
+                    selectedOption === "Track" ? "bg-sky-500" : "bg-none"
                 } hover:bg-sky-500`}
                 onClick={() => setSelectedOption(SearchOption.Track)}
             >
@@ -18,7 +20,7 @@ const SearchResultsSelections = ({ selectedOption, setSelectedOption }: Props) =
             </button>
             <button
                 className={`mb-5 text-white font-medium text-xl p-2.5 rounded-lg border-sky-600 border w-24 ${
-                    selectedOption === 'Album' ? 'bg-sky-500' : 'bg-none'
+                    selectedOption === "Album" ? "bg-sky-500" : "bg-none"
                 } hover:bg-sky-500`}
                 onClick={() => setSelectedOption(SearchOption.Album)}
             >
@@ -26,7 +28,7 @@ const SearchResultsSelections = ({ selectedOption, setSelectedOption }: Props) =
             </button>
             <button
                 className={`mb-5 text-white font-medium text-xl p-2.5 rounded-lg border-sky-600 border w-24 ${
-                    selectedOption === 'Artist' ? 'bg-sky-500' : 'bg-none'
+                    selectedOption === "Artist" ? "bg-sky-500" : "bg-none"
                 } hover:bg-sky-500`}
                 onClick={() => setSelectedOption(SearchOption.Artist)}
             >
@@ -34,7 +36,7 @@ const SearchResultsSelections = ({ selectedOption, setSelectedOption }: Props) =
             </button>
             <button
                 className={`mb-5 text-white font-medium text-xl p-2.5 rounded-lg border-sky-600 border w-24 ${
-                    selectedOption === 'Playlist' ? 'bg-sky-500' : 'bg-none'
+                    selectedOption === "Playlist" ? "bg-sky-500" : "bg-none"
                 } hover:bg-sky-500`}
                 onClick={() => setSelectedOption(SearchOption.Playlist)}
             >

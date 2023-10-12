@@ -1,10 +1,12 @@
-import React from 'react';
+import React from "react";
 
 const defaultContextState = {
-    checkAuthentication: () => {return false},
+    checkAuthentication: () => {
+        return false;
+    },
     isAuthenticated: false,
     displayError: () => {},
-    authenticationError: false
-}
+    authenticationError: false,
+};
 const AuthContext = React.createContext(defaultContextState);
 export default AuthContext;

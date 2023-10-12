@@ -1,14 +1,15 @@
-import  {ReactNode, useEffect, useState} from 'react';
-import {checkUserAuthentication} from "../util/login-util.ts";
+import { ReactNode, useEffect, useState } from "react";
+import { checkUserAuthentication } from "../util/login-util.ts";
 import AuthContext from "./auth-context.tsx";
 
 type Props = {
-    children: ReactNode
-}
+    children: ReactNode;
+};
 //todo for now did as it is, futher make via ReactQuery
-const AuthContextProvider = ({children}: Props) => {
+const AuthContextProvider = ({ children }: Props) => {
     const [isAuthenticatedFlag, setIsAuthenticatedFlag] = useState(false);
-    const [errorAuthenticationFlag, setErrorAuthenticationFlag] = useState(false);
+    const [errorAuthenticationFlag, setErrorAuthenticationFlag] =
+        useState(false);
 
     useEffect(() => {
         const fetchIsAuthenticated = async () => {
@@ -23,7 +24,7 @@ const AuthContextProvider = ({children}: Props) => {
         };
         fetchIsAuthenticated();
         return isAuthenticatedFlag;
-    }
+    };
 
     const displayAuthenticationError = () => {
         setErrorAuthenticationFlag(true);
@@ -33,8 +34,8 @@ const AuthContextProvider = ({children}: Props) => {
         checkAuthentication: checkAuth,
         isAuthenticated: isAuthenticatedFlag,
         displayError: displayAuthenticationError,
-        authenticationError: errorAuthenticationFlag
-    }
+        authenticationError: errorAuthenticationFlag,
+    };
 
     return (
         <AuthContext.Provider value={authContext}>

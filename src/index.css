@@ -1,4 +1,4 @@
-@import '@radix-ui/themes/styles.css';
+@import "@radix-ui/themes/styles.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,5 +10,5 @@
 }
 @font-face {
     font-family: "Fixel-Display";
-    src: url('static/fonts/fixel-display/FixelDisplay-SemiBold.ttf');
+    src: url("static/fonts/fixel-display/FixelDisplay-SemiBold.ttf");
 }
