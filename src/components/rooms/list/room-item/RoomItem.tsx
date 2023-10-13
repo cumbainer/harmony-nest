@@ -1,6 +1,6 @@
 import { Room } from "../../../../util/request-functions.ts";
-import RoomImage from "./RoomImage.tsx";
-import RoomCurrentSongInfo from "./RoomCurrentSongInfo.tsx";
+import RoomImage from "../../host-room/RoomImage.tsx";
+import RoomCurrentSongInfo from "../../host-room/RoomCurrentSongInfo.tsx";
 
 const RoomItem = (props: { room: Room }) => {
     const room = props.room;

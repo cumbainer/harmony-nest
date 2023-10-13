@@ -9,10 +9,10 @@ import {
     faVolumeHigh,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons/faHeart";
-import { Slider as SliderVolume } from "@radix-ui/themes";
 import * as Slider from "@radix-ui/react-slider";
 
 import "./slider.css";
+import TrackSlider from "./TrackSlider.tsx";
 
 type Props = {
     isPlaying: boolean;
@@ -41,13 +41,7 @@ const Player = ({ isFavourited, isPlaying, togglePlayer }: Props) => {
                     <Slider.Thumb className="SliderThumb" aria-label="Volume" />
                 </Slider.Root>
             </div>
-            <SliderVolume
-                defaultValue={[75]}
-                min={0}
-                max={100}
-                step={0.1}
-                className="w-full inset-0 transform scale-125 mb-6"
-            />
+           <TrackSlider duration={100000} />
             <div className="flex items-center justify-center gap-12 relative">
                 {isFavourited ? (
                     <FontAwesomeIcon

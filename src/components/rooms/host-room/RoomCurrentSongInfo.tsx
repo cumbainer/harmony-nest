@@ -1,4 +1,4 @@
-import { Room } from "../../../../util/request-functions.ts";
+import { Room } from "../../../util/request-functions.ts";
 
 const RoomCurrentSongInfo = (props: { room: Room }) => {
     return (

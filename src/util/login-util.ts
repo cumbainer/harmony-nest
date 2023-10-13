@@ -1,25 +1,10 @@
-import { redirect } from "react-router-dom";
-import Cookies from "universal-cookie";
+import {redirect} from "react-router-dom";
 import axios from "axios";
 
-//todo ADD MULTIPLE USERS FUNCTIONALITY
+//todo remove this loader
 export const tokenLoader = async () => {
-    const cookies = new Cookies();
-
     const hostId = new URLSearchParams(window.location.search).get("id")!;
-    const accessToken = new URLSearchParams(window.location.search).get(
-        "access",
-    )!;
-    const refreshToken = new URLSearchParams(window.location.search).get(
-        "refresh",
-    )!;
-
-    // cookies.set("access_token", access, {
-    //     path: "/",
-    //     httpOnly: true
-    // })
     localStorage.setItem("host_id", hostId);
-    // localStorage.setItem('refresh_token', refresh);
     return redirect("/rooms");
 };
 

@@ -15,6 +15,7 @@ const HostRoomPage = () => {
             spotifyWebApi.getMyCurrentPlayingTrack().then((response) => {
                 console.log(response.body.item);
                 const currentTrack = response.body ? response.body.item : null;
+                console.log(currentTrack)
                 const playing = response.body
                     ? response.body.is_playing
                     : false;
