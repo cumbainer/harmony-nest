@@ -55,6 +55,7 @@ const HostRoomPage = () => {
                 >
                     {track ? (
                         <Player
+                            trackDuration={track?.duration_ms}
                             isFavourited={true}
                             isPlaying={isPlaying}
                             togglePlayer={togglePlayer}

@@ -3,22 +3,24 @@ import { useEffect, useState } from "react";
 
 type Props = {
     duration: number;
+    isPlaying: boolean
 };
 
-const TrackSlider = ({ duration }: Props) => {
+const TrackSlider = ({ duration, isPlaying}: Props) => {
     const [value, setValue] = useState([0]);
     const maxDuration = duration / 1000;
 
     useEffect(() => {
+        if(isPlaying) {
+            const interval = setInterval(() => {
+                setValue((prevValue) => [(prevValue[0] + 1) % (maxDuration + 1)]);
+            }, 1000);
 
-        const interval = setInterval(() => {
-            setValue((prevValue) => [(prevValue[0] + 1) % (maxDuration + 1)]);
-        }, 1000);
-
-        return () => {
-            clearInterval(interval);
-        };
-    }, [duration, maxDuration]);
+            return () => {
+                clearInterval(interval);
+            };
+        }
+    }, [duration, isPlaying, maxDuration]);
 
     return (
         <Slider
