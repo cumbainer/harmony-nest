@@ -13,9 +13,10 @@ const HostRoomPage = () => {
     useEffect(() => {
         if (spotifyWebApi) {
             spotifyWebApi.getMyCurrentPlayingTrack().then((response) => {
+                //todo add as [Type] to fetch, to provide strict types
                 console.log(response.body.item);
                 const currentTrack = response.body ? response.body.item : null;
-                console.log(currentTrack)
+                console.log(currentTrack);
                 const playing = response.body
                     ? response.body.is_playing
                     : false;

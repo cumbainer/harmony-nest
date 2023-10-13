@@ -1,4 +1,4 @@
-import { SearchOption } from "../util/options.ts";
+import { SearchOption } from "../util/types.ts";
 
 type Props = {
     selectedOption: SearchOption;

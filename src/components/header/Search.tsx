@@ -4,7 +4,7 @@ import SearchResultList from "./SearchResultList.tsx";
 import { useEffect, useState } from "react";
 import useSpotifyApi from "../../hooks/useSpotifyApi.tsx";
 import SearchResultsSelections from "../SearchResultsSelections.tsx";
-import { SearchOption } from "../../util/options.ts";
+import { SearchOption } from "../../util/types.ts";
 import SpotifyWebApi from "spotify-web-api-node";
 import { useQuery } from "@tanstack/react-query";
 

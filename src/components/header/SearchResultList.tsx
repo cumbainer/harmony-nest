@@ -1,4 +1,4 @@
-import { SearchOption } from "../../util/options.ts";
+import { SearchOption } from "../../util/types.ts";
 import SearchResultItem from "./SearchResultItem.tsx";
 import { ScrollArea } from "@radix-ui/themes";
 import { PuffLoader } from "react-spinners";

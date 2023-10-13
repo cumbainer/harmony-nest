@@ -21,12 +21,17 @@ type Props = {
     togglePlayer: () => void;
     trackDuration: number;
 };
-const Player = ({trackDuration, isFavourited, isPlaying, togglePlayer }: Props) => {
-    const {spotifyWebApi} = useSpotifyApi();
+const Player = ({
+    trackDuration,
+    isFavourited,
+    isPlaying,
+    togglePlayer,
+}: Props) => {
+    const { spotifyWebApi } = useSpotifyApi();
 
     const moveSongHandler = (skip: boolean) => {
-        if(spotifyWebApi) {
-            if(skip) {
+        if (spotifyWebApi) {
+            if (skip) {
                 spotifyWebApi.skipToNext();
             } else {
                 spotifyWebApi.skipToPrevious();
@@ -55,7 +60,7 @@ const Player = ({trackDuration, isFavourited, isPlaying, togglePlayer }: Props) 
                     <Slider.Thumb className="SliderThumb" aria-label="Volume" />
                 </Slider.Root>
             </div>
-           <TrackSlider duration={trackDuration} isPlaying={isPlaying} />
+            <TrackSlider duration={trackDuration} isPlaying={isPlaying} />
             <div className="flex items-center justify-center gap-12 relative">
                 {isFavourited ? (
                     <FontAwesomeIcon
@@ -83,7 +88,9 @@ const Player = ({trackDuration, isFavourited, isPlaying, togglePlayer }: Props) 
                     size={"2xl"}
                     color="white"
                     className="cursor-pointer"
-                    onClick={() => {moveSongHandler(false)}}
+                    onClick={() => {
+                        moveSongHandler(false);
+                    }}
                 />
                 <div
                     className="h-16 w-16 rounded-full bg-[#2382DB] flex items-center justify-center align-middle cursor-pointer"
@@ -112,7 +119,9 @@ const Player = ({trackDuration, isFavourited, isPlaying, togglePlayer }: Props) 
                     size={"2xl"}
                     color="white"
                     className="cursor-pointer"
-                    onClick={() => {moveSongHandler(true)}}
+                    onClick={() => {
+                        moveSongHandler(true);
+                    }}
                 />
                 <FontAwesomeIcon
                     icon={faShuffle}

@@ -1,5 +1,5 @@
 import useSpotifyApi from "../../hooks/useSpotifyApi.tsx";
-import { SearchOption } from "../../util/options.ts";
+import { SearchOption } from "../../util/types.ts";
 
 type Props = {
     id: string;
