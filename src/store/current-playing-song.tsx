@@ -1,21 +1,11 @@
 import { createSlice, createStore } from "@reduxjs/toolkit";
-import { CurrentPlayingTrack } from "../util/types.ts";
+import {
+    CurrentlyPlayingTrack,
+    defaultCurrentlyPlayingTrack,
+} from "../util/types.ts";
 
-const initialState: CurrentPlayingTrack = {
-    artists: [],
-    id: "",
-    album: {
-        id: "",
-        artists: [],
-        title: "",
-        albumType: "",
-        releaseDate: "",
-        totalTracks: 0,
-    },
-    title: "",
-    image: "",
-    duration: 0,
-    popularity: 0,
+const initialState: CurrentlyPlayingTrack = {
+    ...defaultCurrentlyPlayingTrack,
 };
 createSlice({
     name: "current-track",

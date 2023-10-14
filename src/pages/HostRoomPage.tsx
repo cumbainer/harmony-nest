@@ -1,37 +1,46 @@
 import { useEffect, useState } from "react";
 import Player from "../components/rooms/host-room/Player.tsx";
 import useSpotifyApi from "../hooks/useSpotifyApi.tsx";
-
-const makeCapital = (inputText: string) => {
-    return inputText?.charAt(0).toUpperCase() + inputText?.slice(1);
-};
+import {
+    CurrentlyPlayingTrack,
+    defaultCurrentlyPlayingTrack,
+} from "../util/types.ts";
+import {
+    makeCapital,
+    mapResponseTrackToObject,
+} from "../util/util-functions.ts";
 
 const HostRoomPage = () => {
     const { spotifyWebApi } = useSpotifyApi();
-    const [track, setCurrentPlayingTrack] = useState(null);
+    const [track, setCurrentPlayingTrack] = useState<CurrentlyPlayingTrack>(
+        defaultCurrentlyPlayingTrack,
+    );
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     useEffect(() => {
         if (spotifyWebApi) {
             spotifyWebApi.getMyCurrentPlayingTrack().then((response) => {
-                //todo add as [Type] to fetch, to provide strict types
                 console.log(response.body.item);
-                const currentTrack = response.body ? response.body.item : null;
-                console.log(currentTrack);
-                const playing = response.body
+                const isTrackPlaying = response.body
                     ? response.body.is_playing
                     : false;
+                const currTrack = mapResponseTrackToObject(
+                    response.body.item as SpotifyApi.TrackObjectFull,
+                );
 
-                setCurrentPlayingTrack(currentTrack);
-                setIsPlaying(playing);
+                setCurrentPlayingTrack({
+                    ...currTrack,
+                    isPlaying: response.body.is_playing,
+                });
+                setIsPlaying(isTrackPlaying);
             });
         }
     }, [spotifyWebApi]);
 
     const togglePlayer = () => {
         if (isPlaying) {
-            spotifyWebApi.pause();
+            spotifyWebApi?.pause();
         } else {
-            spotifyWebApi.play();
+            spotifyWebApi?.play();
         }
         setIsPlaying(!isPlaying);
     };
@@ -56,7 +65,7 @@ const HostRoomPage = () => {
                 >
                     {track ? (
                         <Player
-                            trackDuration={track?.duration_ms}
+                            trackDuration={track?.duration}
                             isFavourited={true}
                             isPlaying={isPlaying}
                             togglePlayer={togglePlayer}
@@ -71,7 +80,7 @@ const HostRoomPage = () => {
             {track && (
                 <div className="my-1">
                     <h1 className="text-md text-white font-semibold w-1/4">
-                        {track.name}
+                        {track.title}
                     </h1>
                     <div className="flex space-x-3 items-center font-semibold text-gray-500 text-sm my-1">
                         <div className="flex-shrink-0">

@@ -5,21 +5,10 @@ export enum SearchOption {
     Playlist = "Playlist",
 }
 
-export type Artist = {
-    id: string;
-    name: string;
-};
+export type Artist = SpotifyApi.ArtistObjectSimplified;
+export type Album = SpotifyApi.AlbumObjectSimplified;
 
-export type Album = {
-    id: string;
-    title: string;
-    releaseDate: string;
-    artists: Artist[];
-    totalTracks: number;
-    albumType: string;
-};
-
-export type CurrentPlayingTrack = {
+export type CurrentlyPlayingTrack = {
     id: string;
     title: string;
     image: string;
@@ -27,4 +16,32 @@ export type CurrentPlayingTrack = {
     duration: number;
     album: Album;
     popularity: number;
+    isPlaying?: boolean;
+};
+
+export const defaultAlbum: SpotifyApi.AlbumObjectSimplified = {
+    id: "",
+    name: "",
+    artists: [],
+    images: [],
+    album_type: "album",
+    href: "",
+    uri: "",
+    type: "album",
+    total_tracks: 0,
+    available_markets: [],
+    release_date: "",
+    release_date_precision: "day",
+    external_urls: { spotify: "" },
+};
+
+export const defaultCurrentlyPlayingTrack= {
+    id: "",
+    title: "",
+    image: "",
+    artists: [],
+    duration: 0,
+    album: defaultAlbum,
+    popularity: 0,
+    isPlaying: false,
 };
