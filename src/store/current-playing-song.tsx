@@ -10,7 +10,12 @@ const initialState: CurrentlyPlayingTrack = {
 createSlice({
     name: "current-track",
     initialState,
-    reducers: {},
+    reducers: {
+        toggleTrack(state, action) {
+
+        },
+
+    },
 });
 /*
     todo add the managing state of current playing track

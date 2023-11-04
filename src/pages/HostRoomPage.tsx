@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Player from "../components/rooms/host-room/Player.tsx";
 import useSpotifyApi from "../hooks/useSpotifyApi.tsx";
-import {
-    CurrentlyPlayingTrack,
-    defaultCurrentlyPlayingTrack,
-} from "../util/types.ts";
+import { CurrentlyPlayingTrack } from "../util/types.ts";
 import {
     makeCapital,
     mapResponseTrackToObject,
@@ -12,14 +9,13 @@ import {
 
 const HostRoomPage = () => {
     const { spotifyWebApi } = useSpotifyApi();
-    const [track, setCurrentPlayingTrack] = useState<CurrentlyPlayingTrack>(
-        defaultCurrentlyPlayingTrack,
-    );
+    const [track, setCurrentPlayingTrack] =
+        useState<CurrentlyPlayingTrack | null>(null,);
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
-    useEffect(() => {
+
+    const getCurrentlyPlayingTrack = useCallback(() => {
         if (spotifyWebApi) {
             spotifyWebApi.getMyCurrentPlayingTrack().then((response) => {
-                console.log(response.body.item);
                 const isTrackPlaying = response.body
                     ? response.body.is_playing
                     : false;
@@ -35,6 +31,11 @@ const HostRoomPage = () => {
             });
         }
     }, [spotifyWebApi]);
+    useEffect(() => {
+        setInterval(() => {
+            getCurrentlyPlayingTrack();
+        }, 2000)
+    }, [getCurrentlyPlayingTrack, spotifyWebApi]);
 
     const togglePlayer = () => {
         if (isPlaying) {
